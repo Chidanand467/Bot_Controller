@@ -116,15 +116,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun connectToRobot() {
-        val pairedDevices = bluetoothService.getPairedDevices()
-        val hc05Device = pairedDevices.find { it.name?.contains("HC-05", true) == true }
-
-        if (hc05Device != null) {
-            bluetoothService.connect(hc05Device)
-        } else {
-            Toast.makeText(this, "HC-05 device not found. Please pair first.", Toast.LENGTH_LONG).show()
+        val pairedDevices = bluetoothService.getPairedDevices().toList()
+        if (pairedDevices.isEmpty()) {
+            Toast.makeText(this, "No paired devices found", Toast.LENGTH_SHORT).show()
+            return
         }
+        val dialog = DeviceListDialog(pairedDevices) { device ->
+            bluetoothService.connect(device)
+        }
+        dialog.show(supportFragmentManager, "devicePicker")
     }
+
 
     private fun updateConnectionUI(isConnected: Boolean) {
         binding.btnConnect.text = if (isConnected) "Disconnect" else "Connect"
