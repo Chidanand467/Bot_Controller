@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Face Tracking Robot | OOP for Automation</title>
+    <title>Autonomous Person Following Robot | AI-Powered Robotics</title>
     
     <!-- Fonts & Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -17,16 +17,15 @@
     
     <style>
         :root {
-            --cyber-blue: #00f3ff;
-            --neon-pink: #ff00ff;
-            --matrix-green: #00ff00;
-            --deep-space: #0a0a1a;
-            --circuit-board: #0f3;
-            --glow-blue: rgba(0, 243, 255, 0.8);
-            --glow-pink: rgba(255, 0, 255, 0.8);
-            --terminal-bg: rgba(0, 20, 40, 0.95);
-            --card-bg: rgba(10, 10, 26, 0.7);
-            --grid-color: rgba(0, 255, 51, 0.1);
+            --primary-gold: #FFD700;
+            --primary-blue: #4169E1;
+            --accent-teal: #20B2AA;
+            --deep-navy: #0A192F;
+            --dark-card: #112240;
+            --terminal-green: #00FF9D;
+            --glow-gold: rgba(255, 215, 0, 0.3);
+            --glow-blue: rgba(65, 105, 225, 0.3);
+            --premium-border: linear-gradient(45deg, #FFD700, #4169E1, #20B2AA);
         }
 
         * {
@@ -37,1027 +36,772 @@
 
         body {
             font-family: 'Rajdhani', sans-serif;
-            background-color: var(--deep-space);
-            color: var(--cyber-blue);
+            background: var(--deep-navy);
+            color: #E6F1FF;
             overflow-x: hidden;
             background-image: 
-                linear-gradient(var(--grid-color) 1px, transparent 1px),
-                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: gridMove 20s linear infinite;
+                radial-gradient(circle at 25% 25%, rgba(255, 215, 0, 0.05) 0%, transparent 55%),
+                radial-gradient(circle at 75% 75%, rgba(65, 105, 225, 0.05) 0%, transparent 55%);
         }
 
-        @keyframes gridMove {
-            0% { background-position: 0 0; }
-            100% { background-position: 50px 50px; }
-        }
-
-        /* Student Info Header */
-        .student-info {
-            background: rgba(0, 0, 0, 0.9);
-            border-bottom: 2px solid var(--neon-pink);
-            padding: 0.8rem 2rem;
+        /* Premium Header */
+        .premium-header {
+            background: linear-gradient(135deg, rgba(10, 25, 47, 0.98), rgba(17, 34, 64, 0.98));
+            border-bottom: 2px solid;
+            border-image: var(--premium-border);
+            border-image-slice: 1;
+            padding: 1.5rem 3rem;
             position: fixed;
             top: 0;
             width: 100%;
             z-index: 1001;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 0 20px var(--glow-pink);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
         }
 
-        .student-details {
-            font-family: 'Share Tech Mono', monospace;
-            font-size: 0.9rem;
-        }
-
-        .student-details div {
-            margin: 0.2rem 0;
-            color: var(--cyber-blue);
-        }
-
-        .student-details .name {
-            color: var(--matrix-green);
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-
-        .student-details .email {
-            color: var(--neon-pink);
-            font-size: 0.8rem;
-        }
-
-        /* Particle Background */
-        #particles-js {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
-
-        /* Terminal Header */
-        .terminal-header {
-            background: rgba(0, 0, 0, 0.9);
-            border-bottom: 2px solid var(--circuit-board);
-            padding: 1rem 2rem;
+        .university-badge {
             display: flex;
             align-items: center;
             gap: 1rem;
-            position: fixed;
-            top: 80px; /* Changed from 0 to 80px to account for student info */
-            width: 100%;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 30px var(--glow-blue);
+            padding: 0.5rem 1rem;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid var(--primary-gold);
         }
 
-        .terminal-dots {
-            display: flex;
-            gap: 8px;
+        .badge-icon {
+            color: var(--primary-gold);
+            font-size: 1.5rem;
         }
 
-        .terminal-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
+        .badge-text {
+            color: #E6F1FF;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
         }
 
-        .terminal-dot.red { background: #ff5f56; }
-        .terminal-dot.yellow { background: #ffbd2e; }
-        .terminal-dot.green { background: #27ca3f; }
+        .student-info {
+            text-align: right;
+        }
 
-        .terminal-title {
-            font-family: 'Share Tech Mono', monospace;
-            color: var(--matrix-green);
+        .student-name {
+            color: var(--primary-gold);
+            font-family: 'Orbitron', sans-serif;
             font-size: 1.2rem;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px var(--matrix-green);
+            margin-bottom: 0.3rem;
         }
 
-        /* Main Container */
-        .main-container {
-            max-width: 1400px;
-            margin: 180px auto 0; /* Increased from 100px to 180px */
-            padding: 2rem;
+        .student-details {
+            color: var(--accent-teal);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.85rem;
         }
 
-        /* Hero Section */
-        .hero-section {
-            text-align: center;
-            margin-bottom: 4rem;
-            padding: 3rem;
-            background: var(--card-bg);
-            border: 2px solid var(--cyber-blue);
-            border-radius: 20px;
+        /* Hero Section - Premium */
+        .premium-hero {
+            background: linear-gradient(135deg, rgba(17, 34, 64, 0.9), rgba(10, 25, 47, 0.9));
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             position: relative;
             overflow: hidden;
-            animation: glitch 5s infinite;
+            padding-top: 100px;
+            margin-bottom: 4rem;
         }
 
-        @keyframes glitch {
-            0%, 100% { transform: translate(0); }
-            1% { transform: translate(-2px, 2px); }
-            2% { transform: translate(2px, -2px); }
+        .hero-content {
+            max-width: 1200px;
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            z-index: 2;
         }
 
         .project-title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 4rem;
-            background: linear-gradient(45deg, var(--cyber-blue), var(--neon-pink));
+            font-size: 4.5rem;
+            background: linear-gradient(to right, var(--primary-gold), var(--primary-blue), var(--accent-teal));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 1rem;
-            text-shadow: 0 0 30px var(--glow-blue);
-            animation: titleGlow 3s ease-in-out infinite;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
-        @keyframes titleGlow {
-            0%, 100% { text-shadow: 0 0 30px var(--glow-blue); }
-            50% { text-shadow: 0 0 60px var(--glow-blue), 0 0 90px var(--neon-pink); }
-        }
-
-        .subtitle {
-            font-size: 1.5rem;
-            color: var(--matrix-green);
+        .hero-subtitle {
+            font-size: 1.8rem;
+            color: #E6F1FF;
             margin-bottom: 2rem;
             font-weight: 300;
-            letter-spacing: 3px;
+            letter-spacing: 1px;
+            line-height: 1.6;
         }
 
-        /* 3D Robot Container with Human */
-        .robot-container {
-            width: 100%;
-            height: 500px; /* Increased from 400px */
-            margin: 3rem auto;
-            border: 3px solid var(--cyber-blue);
-            border-radius: 15px;
-            overflow: hidden;
-            background: rgba(0, 0, 0, 0.7);
-            position: relative;
-            box-shadow: 0 0 50px var(--glow-blue);
+        .innovation-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-gold), var(--accent-teal));
+            color: var(--deep-navy);
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+            border: none;
         }
 
-        #robot3d {
-            width: 100%;
-            height: 100%;
-        }
-
-        /* OOP Concepts Grid */
-        .oop-concepts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .oop-card {
-            background: rgba(0, 30, 60, 0.8);
-            border: 2px solid;
-            border-image: linear-gradient(45deg, var(--cyber-blue), var(--neon-pink)) 1;
-            padding: 2rem;
-            border-radius: 15px;
+        /* Premium Cards */
+        .premium-card {
+            background: var(--dark-card);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
             position: relative;
             overflow: hidden;
-            transition: transform 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .oop-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px var(--glow-blue);
+        .premium-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
 
-        .oop-header {
+        .card-header {
             display: flex;
             align-items: center;
             gap: 1rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid;
+            border-image: var(--premium-border);
+            border-image-slice: 1;
         }
 
-        .oop-icon {
+        .card-icon {
+            color: var(--primary-gold);
             font-size: 2rem;
-            color: var(--matrix-green);
         }
 
-        .oop-title {
-            color: var(--cyber-blue);
+        .card-title {
+            color: #E6F1FF;
             font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        /* Architecture Grid */
+        .architecture-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .architecture-item {
+            background: rgba(17, 34, 64, 0.7);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .architecture-item:hover {
+            border-color: var(--primary-gold);
+            transform: translateY(-3px);
+        }
+
+        .item-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-gold), var(--accent-teal));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--deep-navy);
             font-size: 1.5rem;
         }
 
-        .oop-advantage {
-            background: rgba(0, 255, 0, 0.1);
-            padding: 1rem;
-            border-left: 3px solid var(--matrix-green);
-            margin: 1rem 0;
-            border-radius: 5px;
+        .item-title {
+            color: var(--primary-gold);
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
         }
 
-        .oop-reason {
-            color: var(--neon-pink);
-            font-style: italic;
-            margin-top: 1rem;
-            font-size: 0.9rem;
-        }
-
-        /* Architecture Visualization */
-        .architecture-viz {
+        /* OOP Implementation */
+        .oop-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin: 3rem 0;
-            perspective: 1000px;
-        }
-
-        .client-side, .server-side {
-            padding: 2rem;
-            background: var(--card-bg);
-            border: 2px solid;
-            border-radius: 15px;
-            transform-style: preserve-3d;
-            transition: transform 0.5s;
-        }
-
-        .client-side {
-            border-color: var(--neon-pink);
-            box-shadow: 0 0 30px var(--glow-pink);
-        }
-
-        .server-side {
-            border-color: var(--cyber-blue);
-            box-shadow: 0 0 30px var(--glow-blue);
-        }
-
-        .client-side:hover, .server-side:hover {
-            transform: rotateY(10deg) translateZ(20px);
-        }
-
-        .component-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 1.5rem;
             margin: 2rem 0;
         }
 
-        .component-card {
-            background: rgba(0, 20, 40, 0.8);
-            border: 1px solid var(--circuit-board);
-            border-radius: 10px;
+        .oop-item {
+            background: rgba(17, 34, 64, 0.6);
             padding: 1.5rem;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary-gold);
         }
 
-        .component-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px var(--glow-blue);
+        .oop-item-title {
+            color: var(--primary-gold);
+            font-family: 'Orbitron', sans-serif;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
         }
 
-        .component-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 2px;
-            background: var(--cyber-blue);
-            animation: scan 2s linear infinite;
-        }
-
-        @keyframes scan {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        /* Code Visualization */
-        .code-visualization {
-            background: var(--terminal-bg);
-            border: 2px solid var(--matrix-green);
-            border-radius: 10px;
-            padding: 2rem;
+        /* Algorithm Visualization */
+        .algorithm-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
             margin: 3rem 0;
-            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .algorithm-step {
+            background: rgba(17, 34, 64, 0.8);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(32, 178, 170, 0.3);
             position: relative;
             overflow: hidden;
         }
 
-        .code-line {
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            width: 40px;
+            height: 40px;
+            background: var(--primary-gold);
+            color: var(--deep-navy);
+            border-radius: 50%;
             display: flex;
             align-items: center;
-            margin: 0.5rem 0;
-            opacity: 0;
-            animation: typeLine 0.5s forwards;
-        }
-
-        @keyframes typeLine {
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        /* Hardware Grid */
-        .hardware-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .pinout-card {
-            background: rgba(0, 30, 60, 0.8);
-            border: 2px solid var(--circuit-board);
-            border-radius: 15px;
-            padding: 1.5rem;
-            position: relative;
-        }
-
-        /* Metrics Dashboard */
-        .metrics-dashboard {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 3rem 0;
-        }
-
-        .metric-card {
-            background: linear-gradient(135deg, rgba(0, 243, 255, 0.1), rgba(255, 0, 255, 0.1));
-            border: 1px solid var(--cyber-blue);
-            border-radius: 10px;
-            padding: 1.5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .metric-value {
-            font-size: 2.5rem;
+            justify-content: center;
             font-family: 'Orbitron', sans-serif;
-            color: var(--matrix-green);
-            text-shadow: 0 0 20px var(--matrix-green);
-            margin: 1rem 0;
+            font-weight: 600;
         }
 
-        .metric-card::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
-            animation: shine 3s infinite;
-        }
-
-        @keyframes shine {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        /* Timeline */
-        .timeline {
-            position: relative;
-            margin: 4rem 0;
-            padding-left: 2rem;
-        }
-
-        .timeline::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 4px;
-            background: var(--cyber-blue);
-            box-shadow: 0 0 20px var(--glow-blue);
-        }
-
-        /* Achievement Grid */
-        .achievement-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .achievement-card {
-            background: rgba(0, 20, 40, 0.8);
-            border: 2px solid;
-            border-image: linear-gradient(45deg, var(--cyber-blue), var(--neon-pink)) 1;
-            padding: 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Interactive Console */
-        .interactive-console {
-            background: black;
-            border: 2px solid var(--matrix-green);
-            border-radius: 10px;
-            padding: 1rem;
-            font-family: 'Share Tech Mono', monospace;
-            margin: 3rem 0;
-            height: 300px;
-            overflow-y: auto;
-        }
-
-        .console-line {
-            color: var(--matrix-green);
-            margin: 0.5rem 0;
-            animation: typeConsole 0.1s steps(40, end);
-        }
-
-        @keyframes typeConsole {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-
-        /* Student Footer */
-        .student-footer {
-            background: rgba(0, 0, 0, 0.9);
-            border-top: 2px solid var(--neon-pink);
-            padding: 2rem;
-            margin-top: 4rem;
-            text-align: center;
-        }
-
-        .footer-grid {
+        /* Applications Grid */
+        .applications-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
-            margin-bottom: 2rem;
+            margin: 3rem 0;
+        }
+
+        .app-card {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(65, 105, 225, 0.1));
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        .app-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary-gold);
+        }
+
+        .app-icon {
+            color: var(--primary-gold);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Tech Stack */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .tech-item {
+            background: rgba(17, 34, 64, 0.8);
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            border: 1px solid var(--accent-teal);
+            color: #E6F1FF;
+            font-family: 'Share Tech Mono', monospace;
+            transition: all 0.3s ease;
+        }
+
+        .tech-item:hover {
+            background: var(--accent-teal);
+            color: var(--deep-navy);
+            transform: translateY(-2px);
+        }
+
+        /* Team Gallery */
+        .team-gallery {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .team-photo {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--primary-gold);
+        }
+
+        .team-photo img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* Future Enhancements */
+        .enhancements {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .enhancement-item {
+            background: rgba(17, 34, 64, 0.6);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid rgba(32, 178, 170, 0.3);
+        }
+
+        /* Premium Footer */
+        .premium-footer {
+            background: linear-gradient(135deg, rgba(10, 25, 47, 0.95), rgba(17, 34, 64, 0.95));
+            padding: 4rem 2rem;
+            margin-top: 4rem;
+            border-top: 2px solid;
+            border-image: var(--premium-border);
+            border-image-slice: 1;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
         }
 
         .footer-section h3 {
-            color: var(--cyber-blue);
-            margin-bottom: 1rem;
+            color: var(--primary-gold);
             font-family: 'Orbitron', sans-serif;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
         }
 
         .footer-section div {
-            color: var(--matrix-green);
-            margin: 0.5rem 0;
-            font-family: 'Share Tech Mono', monospace;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .social-link {
-            width: 40px;
-            height: 40px;
-            background: rgba(0, 243, 255, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--cyber-blue);
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-
-        .social-link:hover {
-            background: var(--cyber-blue);
-            color: var(--deep-space);
-            transform: translateY(-3px);
-        }
-
-        /* Loading Animation */
-        .loader {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--deep-space);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            animation: fadeOut 1s ease-out 3s forwards;
-        }
-
-        .robot-loader {
-            width: 100px;
-            height: 100px;
-            position: relative;
-        }
-
-        .robot-loader::before {
-            content: '';
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            border: 5px solid var(--cyber-blue);
-            border-radius: 50%;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(0.5); opacity: 0.5; }
-            50% { transform: scale(1); opacity: 1; }
-        }
-
-        @keyframes fadeOut {
-            to { opacity: 0; visibility: hidden; }
+            color: #E6F1FF;
+            margin: 0.8rem 0;
+            line-height: 1.6;
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            .main-container {
-                margin-top: 220px;
+            .premium-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+                padding: 1rem;
             }
-            
-            .architecture-viz {
-                grid-template-columns: 1fr;
-            }
-            
+
             .project-title {
                 font-size: 2.5rem;
             }
-            
-            .component-grid {
-                grid-template-columns: 1fr;
+
+            .hero-subtitle {
+                font-size: 1.2rem;
             }
-            
-            .student-info {
+
+            .premium-card {
+                padding: 1.5rem;
+            }
+
+            .team-gallery {
                 flex-direction: column;
-                text-align: center;
-                padding: 0.5rem;
+                align-items: center;
             }
-            
-            .terminal-header {
-                top: 120px;
-            }
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Glow Effects */
+        .glow-effect {
+            position: relative;
+        }
+
+        .glow-effect::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: var(--premium-border);
+            border-radius: inherit;
+            z-index: -1;
+            filter: blur(10px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .glow-effect:hover::after {
+            opacity: 0.5;
         }
     </style>
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div class="loader">
-        <div class="robot-loader"></div>
-        <div style="position: absolute; color: var(--cyber-blue); font-family: 'Orbitron'; margin-top: 150px;">
-            INITIALIZING ROBOT SYSTEM...
+    <!-- Premium Header -->
+    <header class="premium-header">
+        <div class="university-badge">
+            <i class="fas fa-university badge-icon"></i>
+            <div class="badge-text">
+                KLE Technological University<br>
+                <span style="font-size: 0.8rem; color: var(--accent-teal);">Automation & Robotics</span>
+            </div>
         </div>
-    </div>
 
-    <!-- Student Info Header -->
-    <div class="student-info">
-        <div class="student-details">
-            <div class="name">CHIDANAND S K</div>
-            <div class="usn">01FE24BAR027</div>
-            <div class="email">chidanandkarennavar36@example.com</div>
-        </div>
-        <div style="color: var(--matrix-green); font-family: 'Share Tech Mono'; font-size: 0.9rem;">
-            <i class="fas fa-graduation-cap"></i> 2nd Year B.E. Automation & Robotics
-        </div>
-    </div>
-
-    <!-- Particle Background -->
-    <div id="particles-js"></div>
-
-    <!-- Terminal Header -->
-    <header class="terminal-header">
-        <div class="terminal-dots">
-            <div class="terminal-dot red"></div>
-            <div class="terminal-dot yellow"></div>
-            <div class="terminal-dot green"></div>
-        </div>
-        <div class="terminal-title">face_tracking_robot.exe [ACTIVE]</div>
-        <div style="margin-left: auto; color: var(--matrix-green); font-family: 'Share Tech Mono';">
-            <i class="fas fa-satellite-dish"></i> CONNECTED
+        <div class="student-info">
+            <div class="student-name">CHIDANAND S K</div>
+            <div class="student-details">
+                01FE24BAR027 | 2nd Year B.E.<br>
+                OOP for Automation Project
+            </div>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <div class="main-container">
-        <!-- Hero Section -->
-        <section class="hero-section">
-            <h1 class="project-title">FACE TRACKING ROBOT</h1>
-            <div class="subtitle">Object-Oriented Programming for Automation</div>
-            <div style="margin-top: 2rem; color: var(--matrix-green);">
-                <i class="fas fa-robot"></i> Real-time Face Detection & Autonomous Tracking System
+    <!-- Hero Section -->
+    <section class="premium-hero">
+        <div class="hero-content">
+            <h1 class="project-title">AUTONOMOUS PERSON FOLLOWING ROBOT</h1>
+            <div class="hero-subtitle">
+                AI-Powered Real-time Tracking System with Object-Oriented Architecture
+            </div>
+            
+            <div class="innovation-badge">
+                <i class="fas fa-bolt"></i> KEY INNOVATION: PID-Controlled Navigation Algorithm
+            </div>
+
+            <div style="margin-top: 3rem; max-width: 800px; margin: 3rem auto 0;">
+                <p style="font-size: 1.2rem; line-height: 1.8; color: #B0C4DE;">
+                    An intelligent robotic system that combines computer vision, embedded systems, 
+                    and object-oriented programming to track and follow humans in real-time. 
+                    Using Raspberry Pi as the central brain and smartphone camera for vision input, 
+                    the system processes live video streams to detect and follow a target person autonomously.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Container -->
+    <div style="max-width: 1400px; margin: 0 auto; padding: 0 2rem;">
+        <!-- System Architecture -->
+        <section class="premium-card">
+            <div class="card-header">
+                <i class="fas fa-sitemap card-icon"></i>
+                <h2 class="card-title">SYSTEM ARCHITECTURE</h2>
+            </div>
+            
+            <div class="architecture-grid">
+                <div class="architecture-item">
+                    <div class="item-icon">
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <h3 class="item-title">Raspberry Pi 4</h3>
+                    <p>Quad-core 64-bit processor with 4GB RAM running Python with OpenCV for real-time processing</p>
+                </div>
+                
+                <div class="architecture-item">
+                    <div class="item-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3 class="item-title">Vision System</h3>
+                    <p>Smartphone IP Camera streaming at 30 FPS with WiFi connectivity for high-quality video input</p>
+                </div>
+                
+                <div class="architecture-item">
+                    <div class="item-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3 class="item-title">Motor Control</h3>
+                    <p>Dual 12V DC Motors with ESCs for precise speed and direction control</p>
+                </div>
+                
+                <div class="architecture-item">
+                    <div class="item-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="item-title">AI Processing</h3>
+                    <p>Haar Cascade & Deep Learning models for real-time person detection and tracking</p>
+                </div>
             </div>
         </section>
 
-        <!-- 3D Robot with Human Visualization -->
-        <section>
-            <h2 style="font-family: 'Orbitron'; color: var(--neon-pink); margin-bottom: 1rem;">
-                <i class="fas fa-robot"></i> LIVE DEMONSTRATION - ROBOT TRACKING HUMAN
-            </h2>
-            <div class="robot-container">
-                <div id="robot3d"></div>
+        <!-- OOP Implementation -->
+        <section class="premium-card">
+            <div class="card-header">
+                <i class="fas fa-cubes card-icon"></i>
+                <h2 class="card-title">OOP IMPLEMENTATION</h2>
+            </div>
+            
+            <div class="oop-grid">
+                <div class="oop-item">
+                    <h3 class="oop-item-title">Classes & Objects</h3>
+                    <p>Robot, Camera, MotorController, FaceDetector, and Navigator classes with proper instantiation</p>
+                </div>
+                
+                <div class="oop-item">
+                    <h3 class="oop-item-title">Encapsulation</h3>
+                    <p>Private attributes with getter/setter methods for hardware control and safety protocols</p>
+                </div>
+                
+                <div class="oop-item">
+                    <h3 class="oop-item-title">Abstraction</h3>
+                    <p>Complex computer vision algorithms hidden behind simple interface methods</p>
+                </div>
+                
+                <div class="oop-item">
+                    <h3 class="oop-item-title">Inheritance</h3>
+                    <p>Base Robot class extended to PersonFollowerRobot with specialized tracking methods</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 2rem; padding: 1.5rem; background: rgba(255, 215, 0, 0.1); border-radius: 10px;">
+                <h3 style="color: var(--primary-gold); margin-bottom: 1rem;">Technical Stack</h3>
+                <div class="tech-stack">
+                    <span class="tech-item">Python 3.9</span>
+                    <span class="tech-item">OpenCV 4.5</span>
+                    <span class="tech-item">NumPy</span>
+                    <span class="tech-item">RPi.GPIO</span>
+                    <span class="tech-item">Socket Programming</span>
+                    <span class="tech-item">Multithreading</span>
+                </div>
             </div>
         </section>
-<!-- IMAGE GALLERY SECTION -->
-<section style="margin: 3rem 0;">
-    <h2 style="font-family: 'Orbitron'; color: var(--cyber-blue); margin-bottom: 1.5rem;">
-        <i class="fas fa-images"></i> OUR TEAM
-    </h2>
-    
-    <div class="image-gallery">
-        <!-- Image 1 -->
-        <div class="image-container">
-            <img src="https://github.com/Chidanand467/Bot_Controller/blob/master/WhatsApp%20Image%202026-01-12%20at%208.26.18%20AM.jpeg?raw=true" 
-                 alt="Robot Hardware Assembly">
-            <div class="TEAM">
-                <i class="fas fa-robot"></i> TEAM
+
+        <!-- Working Algorithm -->
+        <section class="premium-card">
+            <div class="card-header">
+                <i class="fas fa-project-diagram card-icon"></i>
+                <h2 class="card-title">WORKING ALGORITHM</h2>
+            </div>
+            
+            <div class="algorithm-flow">
+                <div class="algorithm-step">
+                    <div class="step-number">1</div>
+                    <h3 style="color: var(--primary-gold); margin-bottom: 1rem;">Frame Capture</h3>
+                    <p>30 FPS video streaming via IP camera with WiFi connectivity for continuous input</p>
+                </div>
+                
+                <div class="algorithm-step">
+                    <div class="step-number">2</div>
+                    <h3 style="color: var(--primary-gold); margin-bottom: 1rem;">Face Detection</h3>
+                    <p>Haar Cascade classifiers identify human faces in the frame with high accuracy</p>
+                </div>
+                
+                <div class="algorithm-step">
+                    <div class="step-number">3</div>
+                    <h3 style="color: var(--primary-gold); margin-bottom: 1rem;">PID Control</h3>
+                    <p>Proportional-Integral-Derivative algorithm calculates optimal motor speeds for smooth following</p>
+                </div>
+                
+                <div class="algorithm-step">
+                    <div class="step-number">4</div>
+                    <h3 style="color: var(--primary-gold); margin-bottom: 1rem;">Motor Control</h3>
+                    <p>PWM signals control ESC modules for precise movement and direction changes</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Gallery -->
+        <section class="premium-card">
+            <div class="card-header">
+                <i class="fas fa-users card-icon"></i>
+                <h2 class="card-title">OUR TEAM</h2>
+            </div>
+            
+            <div class="team-gallery">
+                <div class="team-photo">
+                    <img src="https://github.com/Chidanand467/Bot_Controller/blob/master/WhatsApp%20Image%202026-01-12%20at%208.26.18%20AM.jpeg?raw=true" 
+                         alt="Robotics Team">
+                </div>
+            </div>
+        </section>
+
+        <!-- Applications & Future Scope -->
+        <section class="premium-card">
+            <div class="card-header">
+                <i class="fas fa-rocket card-icon"></i>
+                <h2 class="card-title">APPLICATIONS & FUTURE SCOPE</h2>
+            </div>
+            
+            <div class="applications-grid">
+                <div class="app-card">
+                    <i class="fas fa-heartbeat app-icon"></i>
+                    <h3>Healthcare</h3>
+                    <p>Assistive robots for elderly care and hospital logistics</p>
+                </div>
+                
+                <div class="app-card">
+                    <i class="fas fa-shield-alt app-icon"></i>
+                    <h3>Security</h3>
+                    <p>Autonomous surveillance and perimeter monitoring</p>
+                </div>
+                
+                <div class="app-card">
+                    <i class="fas fa-shopping-cart app-icon"></i>
+                    <h3>Retail</h3>
+                    <p>Smart shopping assistants and inventory management</p>
+                </div>
+                
+                <div class="app-card">
+                    <i class="fas fa-graduation-cap app-icon"></i>
+                    <h3>Education</h3>
+                    <p>Platform for AI and robotics research and learning</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 3rem;">
+                <h3 style="color: var(--primary-gold); margin-bottom: 1.5rem;">
+                    <i class="fas fa-cogs"></i> FUTURE ENHANCEMENTS
+                </h3>
+                <div class="enhancements">
+                    <div class="enhancement-item">
+                        <i class="fas fa-robot" style="color: var(--accent-teal); margin-bottom: 0.5rem;"></i>
+                        <p>YOLO Object Detection</p>
+                    </div>
+                    <div class="enhancement-item">
+                        <i class="fas fa-map" style="color: var(--accent-teal); margin-bottom: 0.5rem;"></i>
+                        <p>SLAM Environment Mapping</p>
+                    </div>
+                    <div class="enhancement-item">
+                        <i class="fas fa-radar" style="color: var(--accent-teal); margin-bottom: 0.5rem;"></i>
+                        <p>Ultrasonic Obstacle Avoidance</p>
+                    </div>
+                    <div class="enhancement-item">
+                        <i class="fas fa-cloud" style="color: var(--accent-teal); margin-bottom: 0.5rem;"></i>
+                        <p>Cloud-based Analytics</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Project Conclusion -->
+        <section class="premium-card">
+            <div class="card-header">
+                <i class="fas fa-flag-checkered card-icon"></i>
+                <h2 class="card-title">PROJECT CONCLUSION</h2>
+            </div>
+            
+            <div style="padding: 2rem; background: rgba(17, 34, 64, 0.5); border-radius: 15px; margin-top: 1rem;">
+                <p style="font-size: 1.2rem; line-height: 1.8; margin-bottom: 2rem;">
+                    This project successfully demonstrates the integration of object-oriented programming 
+                    with embedded systems and computer vision to create an intelligent autonomous robot. 
+                    The modular design allows for easy expansion, making it a foundation for advanced 
+                    AI robotics applications.
+                </p>
+                
+                <div style="display: flex; align-items: center; gap: 1rem; padding: 1.5rem; background: rgba(255, 215, 0, 0.1); border-radius: 10px;">
+                    <i class="fas fa-award" style="color: var(--primary-gold); font-size: 2rem;"></i>
+                    <div>
+                        <h3 style="color: var(--primary-gold); margin-bottom: 0.5rem;">2025 Robotics Project</h3>
+                        <p style="color: #E6F1FF;">Computer Science Department - Automation & Robotics</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Premium Footer -->
+    <footer class="premium-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>PROJECT DETAILS</h3>
+                <div>Autonomous Person Following Robot</div>
+                <div>OOP for Automation - 3rd Semester</div>
+                <div>Academic Year: 2025-2026</div>
+                <div>Supervisor: Department of Automation & Robotics</div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>STUDENT INFORMATION</h3>
+                <div class="student-name">CHIDANAND S K</div>
+                <div>USN: 01FE24BAR027</div>
+                <div>2nd Year B.E. Automation & Robotics</div>
+                <div>KLE Technological University, Hubballi</div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>CONTACT & LINKS</h3>
+                <div>
+                    <i class="fas fa-envelope" style="color: var(--accent-teal); margin-right: 10px;"></i>
+                    chidanandkarennavar36@example.com
+                </div>
+                <div>
+                    <i class="fab fa-github" style="color: var(--accent-teal); margin-right: 10px;"></i>
+                    github.com/chidanand467
+                </div>
+                <div>
+                    <i class="fab fa-linkedin" style="color: var(--accent-teal); margin-right: 10px;"></i>
+                    LinkedIn Profile
+                </div>
             </div>
         </div>
         
-    </div>
-</section>
-        <!-- OOP Concepts Section -->
-        <section>
-            <h2 style="font-family: 'Orbitron'; color: var(--cyber-blue); margin: 3rem 0 1rem;">
-                <i class="fas fa-cubes"></i> ADVANCED OOP CONCEPTS IMPLEMENTED
-            </h2>
-            
-            <div class="oop-concepts-grid">
-                <!-- Encapsulation -->
-                <div class="oop-card">
-                    <div class="oop-header">
-                        <div class="oop-icon">📦</div>
-                        <h3 class="oop-title">ENCAPSULATION</h3>
-                    </div>
-                    <p><strong>Implementation:</strong> Private attributes with getter/setter methods</p>
-                    <div class="oop-advantage">
-                        <strong>Advantage:</strong> Data protection, controlled access, implementation hiding
-                    </div>
-                    <p class="oop-reason">
-                        <strong>Why Selected:</strong> To protect sensitive motor control parameters and ensure safe access
-                    </p>
-                </div>
-
-                <!-- Abstraction -->
-                <div class="oop-card">
-                    <div class="oop-header">
-                        <div class="oop-icon">🎭</div>
-                        <h3 class="oop-title">ABSTRACTION</h3>
-                    </div>
-                    <p><strong>Implementation:</strong> Simple public interfaces over complex internal logic</p>
-                    <div class="oop-advantage">
-                        <strong>Advantage:</strong> Reduced complexity, easier maintenance, modular design
-                    </div>
-                    <p class="oop-reason">
-                        <strong>Why Selected:</strong> To hide complex computer vision algorithms behind simple methods
-                    </p>
-                </div>
-
-                <!-- Inheritance -->
-                <div class="oop-card">
-                    <div class="oop-header">
-                        <div class="oop-icon">🧬</div>
-                        <h3 class="oop-title">INHERITANCE</h3>
-                    </div>
-                    <p><strong>Implementation:</strong> Base Sensor class with specialized child classes</p>
-                    <div class="oop-advantage">
-                        <strong>Advantage:</strong> Code reuse, polymorphism, extensible design
-                    </div>
-                    <p class="oop-reason">
-                        <strong>Why Selected:</strong> To create reusable sensor patterns for future sensor additions
-                    </p>
-                </div>
-
-                <!-- Polymorphism -->
-                <div class="oop-card">
-                    <div class="oop-header">
-                        <div class="oop-icon">🔄</div>
-                        <h3 class="oop-title">POLYMORPHISM</h3>
-                    </div>
-                    <p><strong>Implementation:</strong> Interface-based design with multiple implementations</p>
-                    <div class="oop-advantage">
-                        <strong>Advantage:</strong> Flexibility, interchangeable components, runtime binding
-                    </div>
-                    <p class="oop-reason">
-                        <strong>Why Selected:</strong> To support different face detection algorithms (Haar vs YOLO)
-                    </p>
-                </div>
-
-                <!-- SOLID Principles -->
-                <div class="oop-card">
-                    <div class="oop-header">
-                        <div class="oop-icon">⭐</div>
-                        <h3 class="oop-title">SOLID PRINCIPLES</h3>
-                    </div>
-                    <p><strong>Implementation:</strong> Single Responsibility, Open/Closed, Dependency Inversion</p>
-                    <div class="oop-advantage">
-                        <strong>Advantage:</strong> Scalable, maintainable, testable code architecture
-                    </div>
-                    <p class="oop-reason">
-                        <strong>Why Selected:</strong> Professional software engineering practices for industrial robotics
-                    </p>
-                </div>
-
-                <!-- Design Patterns -->
-                <div class="oop-card">
-                    <div class="oop-header">
-                        <div class="oop-icon">🎨</div>
-                        <h3 class="oop-title">DESIGN PATTERNS</h3>
-                    </div>
-                    <p><strong>Implementation:</strong> Observer, Strategy, Factory patterns</p>
-                    <div class="oop-advantage">
-                        <strong>Advantage:</strong> Proven solutions, flexibility, easier collaboration
-                    </div>
-                    <p class="oop-reason">
-                        <strong>Why Selected:</strong> Industry-standard patterns for robust robotics software
-                    </p>
-                </div>
-
-                <!-- Composition over Inheritance -->
-                <div class="oop-card">
-                    <div class="oop-header">
-                        <div class="oop-icon">🔗</div>
-                        <h3 class="oop-title">COMPOSITION</h3>
-                    </div>
-                    <p><strong>Implementation:</strong> Robot has-a FaceDetector, has-a MotorController</p>
-                    <div class="oop-advantage">
-                        <strong>Advantage:</strong> Flexible, modular, avoids inheritance hierarchy problems
-                    </div>
-                    <p class="oop-reason">
-                        <strong>Why Selected:</strong> To build complex robots from simple, interchangeable components
-                    </p>
-                </div>
-
-                <!-- Dependency Injection -->
-                <div class="oop-card">
-                    <div class="oop-header">
-                        <div class="oop-icon">💉</div>
-                        <h3 class="oop-title">DEPENDENCY INJECTION</h3>
-                    </div>
-                    <p><strong>Implementation:</strong> Constructor injection for loose coupling</p>
-                    <div class="oop-advantage">
-                        <strong>Advantage:</strong> Testable, configurable, reduces tight coupling
-                    </div>
-                    <p class="oop-reason">
-                        <strong>Why Selected:</strong> To enable unit testing and easy swapping of components
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Architecture Visualization -->
-        <section>
-            <h2 style="font-family: 'Orbitron'; color: var(--cyber-blue); margin: 3rem 0 1rem;">
-                <i class="fas fa-sitemap"></i> SYSTEM ARCHITECTURE
-            </h2>
-            <div class="architecture-viz">
-                <div class="client-side">
-                    <h3 style="color: var(--neon-pink);"><i class="fas fa-laptop"></i> CLIENT (LAPTOP)</h3>
-                    <div class="component-grid">
-                        <div class="component-card">
-                            <h4><i class="fas fa-eye"></i> FaceDetector</h4>
-                            <p style="color: var(--matrix-green); font-size: 0.9rem;">
-                                Haar Cascade face detection with private model loading
-                            </p>
-                        </div>
-                        <div class="component-card">
-                            <h4><i class="fas fa-crosshairs"></i> FaceTracker</h4>
-                            <p style="color: var(--matrix-green); font-size: 0.9rem;">
-                                Calculates face offset and generates movement commands
-                            </p>
-                        </div>
-                        <div class="component-card">
-                            <h4><i class="fas fa-network-wired"></i> RobotClient</h4>
-                            <p style="color: var(--matrix-green); font-size: 0.9rem;">
-                                TCP/IP socket communication with the robot
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="server-side">
-                    <h3 style="color: var(--cyber-blue);"><i class="fas fa-server"></i> SERVER (RASPBERRY PI)</h3>
-                    <div class="component-grid">
-                        <div class="component-card">
-                            <h4><i class="fas fa-cogs"></i> RobotController</h4>
-                            <p style="color: var(--matrix-green); font-size: 0.9rem;">
-                                Orchestrates all robot operations and safety checks
-                            </p>
-                        </div>
-                        <div class="component-card">
-                            <h4><i class="fas fa-motorcycle"></i> Actuator</h4>
-                            <p style="color: var(--matrix-green); font-size: 0.9rem;">
-                                PWM motor control with speed trimming
-                            </p>
-                        </div>
-                        <div class="component-card">
-                            <h4><i class="fas fa-ruler"></i> UltrasonicSensor</h4>
-                            <p style="color: var(--matrix-green); font-size: 0.9rem;">
-                                Real-time distance measurement for collision avoidance
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Code Visualization -->
-        <section>
-            <h2 style="font-family: 'Orbitron'; color: var(--matrix-green); margin: 3rem 0 1rem;">
-                <i class="fas fa-code"></i> OOP CODE IMPLEMENTATION
-            </h2>
-            
-            <div class="code-visualization">
-                <div class="code-line">
-                    <span style="color: #569cd6;">class</span> 
-                    <span style="color: #4ec9b0;">FaceTracker</span>:
-                </div>
-                <div class="code-line">
-                    <span style="color: #569cd6;">&nbsp;&nbsp;def</span> 
-                    <span style="color: #dcdcaa;">__init__</span>(<span style="color: #9cdcfe;">self</span>, detector: <span style="color: #4ec9b0;">FaceDetector</span>, robot: <span style="color: #4ec9b0;">RobotClient</span>):
-                </div>
-                <div class="code-line">
-                    <span style="color: #6a9955;">&nbsp;&nbsp;&nbsp;&nbsp;# DEPENDENCY INJECTION for loose coupling</span>
-                </div>
-                <div class="code-line">
-                    <span style="color: #9cdcfe;">&nbsp;&nbsp;&nbsp;&nbsp;self</span>.detector = detector
-                </div>
-                <div class="code-line">
-                    <span style="color: #9cdcfe;">&nbsp;&nbsp;&nbsp;&nbsp;self</span>.robot = robot
-                </div>
-                <div class="code-line">
-                    <span style="color: #569cd6;">&nbsp;&nbsp;def</span> 
-                    <span style="color: #dcdcaa;">track_face</span>(<span style="color: #9cdcfe;">self</span>, frame):
-                </div>
-                <div class="code-line">
-                    <span style="color: #9cdcfe;">&nbsp;&nbsp;&nbsp;&nbsp;face</span> = <span style="color: #9cdcfe;">self</span>.detector.detect_largest_face(frame)
-                </div>
-                <div class="code-line">
-                    <span style="color: #c586c0;">&nbsp;&nbsp;&nbsp;&nbsp;if</span> <span style="color: #9cdcfe;">face</span>:
-                </div>
-                <div class="code-line">
-                    <span style="color: #9cdcfe;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;command</span> = <span style="color: #9cdcfe;">self</span>.<span style="color: #dcdcaa;">_calculate_command</span>(face)
-                </div>
-                <div class="code-line">
-                    <span style="color: #9cdcfe;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self</span>.robot.send_command(command)
-                </div>
-            </div>
-        </section>
-
-        <!-- Hardware Integration -->
-        <section>
-            <h2 style="font-family: 'Orbitron'; color: var(--neon-pink); margin: 3rem 0 1rem;">
-                <i class="fas fa-microchip"></i> HARDWARE INTEGRATION
-            </h2>
-            
-            <div class="hardware-grid">
-                <div class="pinout-card">
-                    <h3 style="color: var(--cyber-blue);"><i class="fas fa-plug"></i> GPIO PINOUT</h3>
-                    <div style="border-bottom: 1px solid rgba(0,255,51,0.2); padding: 0.5rem 0;">
-                        <span>Pin 11 (GPIO17)</span>
-                        <span style="color: var(--matrix-green); float: right;">Ultrasonic TRIG</span>
-                    </div>
-                    <div style="border-bottom: 1px solid rgba(0,255,51,0.2); padding: 0.5rem 0;">
-                        <span>Pin 13 (GPIO27)</span>
-                        <span style="color: var(--matrix-green); float: right;">Ultrasonic ECHO</span>
-                    </div>
-                    <div style="border-bottom: 1px solid rgba(0,255,51,0.2); padding: 0.5rem 0;">
-                        <span>Pin 12 (GPIO18)</span>
-                        <span style="color: var(--neon-pink); float: right;">Left ESC PWM</span>
-                    </div>
-                    <div style="padding: 0.5rem 0;">
-                        <span>Pin 32 (GPIO13)</span>
-                        <span style="color: var(--neon-pink); float: right;">Right ESC PWM</span>
-                    </div>
-                </div>
-                
-                <div class="pinout-card">
-                    <h3 style="color: var(--cyber-blue);"><i class="fas fa-tachometer-alt"></i> PWM CONTROL</h3>
-                    <div style="border-bottom: 1px solid rgba(0,255,51,0.2); padding: 0.5rem 0;">
-                        <span>7.5% duty</span>
-                        <span style="color: var(--matrix-green); float: right;">1500µs = NEUTRAL</span>
-                    </div>
-                    <div style="border-bottom: 1px solid rgba(0,255,51,0.2); padding: 0.5rem 0;">
-                        <span>10.0% duty</span>
-                        <span style="color: var(--matrix-green); float: right;">2000µs = FULL FORWARD</span>
-                    </div>
-                    <div style="padding: 0.5rem 0;">
-                        <span>5.0% duty</span>
-                        <span style="color: var(--matrix-green); float: right;">1000µs = FULL REVERSE</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Performance Metrics -->
-        <section>
-            <h2 style="font-family: 'Orbitron'; color: var(--matrix-green); margin: 3rem 0 1rem;">
-                <i class="fas fa-chart-line"></i> PERFORMANCE METRICS
-            </h2>
-            
-            <div class="metrics-dashboard">
-                <div class="metric-card">
-                    <h3>LATENCY</h3>
-                    <div class="metric-value">65ms</div>
-                    <p>End-to-End Processing</p>
-                </div>
-                <div class="metric-card">
-                    <h3>FRAME RATE</h3>
-                    <div class="metric-value">25 FPS</div>
-                    <p>Real-time Processing</p>
-                </div>
-                <div class="metric-card">
-                    <h3>ACCURACY</h3>
-                    <div class="metric-value">90%</div>
-                    <p>Face Detection Rate</p>
-                </div>
-                <div class="metric-card">
-                    <h3>CONTROL LOOP</h3>
-                    <div class="metric-value">25 Hz</div>
-                    <p>Server Frequency</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Interactive Console -->
-        <div class="interactive-console" id="console">
-            <div class="console-line">> Initializing Face Tracking System...</div>
-            <div class="console-line">> Loading Haar Cascade model...</div>
-            <div class="console-line">> Establishing TCP connection...</div>
-            <div class="console-line">> Robot motors armed and ready</div>
-            <div class="console-line">> Face detected! Tracking active</div>
-            <div class="console-line">> Distance: 45cm | Command: FORWARD</div>
-            <div class="console-line">> Face offset: -15px | Command: LEFT</div>
-            <div class="console-line">> System operational. All metrics nominal.</div>
+        <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+            <p style="color: var(--accent-teal); font-family: 'Orbitron', sans-serif; font-size: 0.9rem;">
+                © 2025 Autonomous Robotics Project | KLE Technological University
+            </p>
+            <p style="color: #B0C4DE; font-size: 0.8rem; margin-top: 1rem;">
+                Built with Object-Oriented Programming Principles & Modern Web Technologies
+            </p>
         </div>
-
-        <!-- Student Footer -->
-        <footer class="student-footer">
-            <div class="footer-grid">
-                <div class="footer-section">
-                    <h3><i class="fas fa-user"></i> STUDENT INFORMATION</h3>
-                    <div class="name">CHIDANAND S K</div>
-                    <div class="usn">01FE24BAR027</div>
-                    <div class="email">chidanandkarennavar36@example.com</div>
-                    <div>2nd Year B.E. Automation & Robotics</div>
-                </div>
-                
-                <div class="footer-section">
-                    <h3><i class="fas fa-university"></i> INSTITUTION</h3>
-                    <div>KLE Technological University</div>
-                    <div>Hubballi, Karnataka</div>
-                    <div>Department of Automation & Robotics</div>
-                </div>
-                
-                <div class="footer-section">
-                    <h3><i class="fas fa-book"></i> COURSE</h3>
-                    <div>OOP for Automation</div>
-                    <div>3rd Semester Project</div>
-                    <div>Academic Year: 2025-2026</div>
-                </div>
-            </div>
-            
-            <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--cyber-blue);">
-                <div style="color: var(--matrix-green); font-family: 'Share Tech Mono'; font-size: 1.2rem;">
-                    PERSON FOLLOWING ROBOT  | OOP FOR AUTOMATION
-                </div>
-                <div style="margin-top: 1rem; color: var(--cyber-blue); font-size: 0.9rem;">
-                    <i class="fas fa-code"></i> Built with Object-Oriented Programming Principles
-                </div>
-                
-                <div class="social-links">
-                    <a href="mailto:chidanandkarennavar36@example.com" class="social-link" title="Email">
-                        <i class="fas fa-envelope"></i>
-                    </a>
-                    <a href="https://github.com/chidanand467" class="social-link" title="GitHub">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="#" class="https://www.linkedin.com/in/chidanand-s-karennavar-096b21332?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" title="LinkedIn">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                </div>
-            </div>
-        </footer>
-    </div>
+    </footer>
 
     <script>
-        // Initialize Particle.js
+        // Initialize Particle.js with premium configuration
         particlesJS("particles-js", {
             particles: {
-                number: { value: 80, density: { enable: true, value_area: 800 } },
-                color: { value: ["#00f3ff", "#ff00ff", "#00ff00"] },
+                number: { value: 60, density: { enable: true, value_area: 800 } },
+                color: { value: ["#FFD700", "#4169E1", "#20B2AA"] },
                 shape: { type: "circle" },
-                opacity: { value: 0.5, random: true },
-                size: { value: 3, random: true },
+                opacity: { value: 0.3, random: true },
+                size: { value: 2.5, random: true },
                 line_linked: {
                     enable: true,
-                    distance: 150,
-                    color: "#00f3ff",
+                    distance: 120,
+                    color: "#4169E1",
                     opacity: 0.2,
                     width: 1
                 },
                 move: {
                     enable: true,
-                    speed: 2,
+                    speed: 1,
                     direction: "none",
                     random: true,
                     straight: false,
@@ -1074,278 +818,48 @@
             }
         });
 
-        // 3D Robot with Human Visualization
-        function init3DRobot() {
-            const container = document.getElementById('robot3d');
-            if (!container) return;
-
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-            
-            renderer.setSize(container.clientWidth, container.clientHeight);
-            renderer.setClearColor(0x000000, 0);
-            container.appendChild(renderer.domElement);
-
-            // Add lights
-            const ambientLight = new THREE.AmbientLight(0x00f3ff, 0.5);
-            scene.add(ambientLight);
-
-            const directionalLight = new THREE.DirectionalLight(0xff00ff, 0.8);
-            directionalLight.position.set(5, 5, 5);
-            scene.add(directionalLight);
-
-            // Create robot base
-            const robotGeometry = new THREE.BoxGeometry(3, 0.5, 2);
-            const robotMaterial = new THREE.MeshPhongMaterial({ 
-                color: 0x333333,
-                shininess: 100,
-                specular: 0x00f3ff
-            });
-            const robotBase = new THREE.Mesh(robotGeometry, robotMaterial);
-            robotBase.position.y = 0.25;
-            scene.add(robotBase);
-
-            // Add wheels
-            const wheelGeometry = new THREE.CylinderGeometry(0.3, 0.3, 0.2, 16);
-            const wheelMaterial = new THREE.MeshPhongMaterial({ color: 0xff0000 });
-            
-            const leftWheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
-            leftWheel.position.set(-1.5, 0, 0);
-            leftWheel.rotation.z = Math.PI / 2;
-            scene.add(leftWheel);
-
-            const rightWheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
-            rightWheel.position.set(1.5, 0, 0);
-            rightWheel.rotation.z = Math.PI / 2;
-            scene.add(rightWheel);
-
-            // Add camera/sensor
-            const sensorGeometry = new THREE.SphereGeometry(0.2, 16, 16);
-            const sensorMaterial = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
-            const sensor = new THREE.Mesh(sensorGeometry, sensorMaterial);
-            sensor.position.set(0, 0.85, 0.8);
-            scene.add(sensor);
-
-            // Create human figure
-            createHumanFigure(scene);
-
-            // Position camera
-            camera.position.set(0, 3, 8);
-            camera.lookAt(0, 1, 0);
-
-            // Animation variables
-            let robotAngle = 0;
-            let humanAngle = 0;
-            let trackingActive = true;
-
-            // Animation loop
-            function animate() {
-                requestAnimationFrame(animate);
-                
-                // Rotate wheels
-                leftWheel.rotation.x += 0.02;
-                rightWheel.rotation.x += 0.02;
-                
-                // Pulsing sensor
-                const scale = 1 + 0.2 * Math.sin(Date.now() * 0.005);
-                sensor.scale.set(scale, scale, scale);
-                
-                // Robot tracking motion
-                if (trackingActive) {
-                    robotAngle += 0.005;
-                    robotBase.position.x = Math.sin(robotAngle) * 0.5;
-                }
-                
-                // Human walking animation
-                humanAngle += 0.01;
-                const human = scene.getObjectByName('human');
-                if (human) {
-                    human.position.x = Math.sin(humanAngle) * 2;
-                    human.position.y = 0.5 + Math.abs(Math.sin(humanAngle * 4)) * 0.1;
-                    
-                    // Make robot face human
-                    const dx = human.position.x - robotBase.position.x;
-                    robotBase.rotation.y = Math.atan2(dx, 2) * 0.5;
-                }
-                
-                renderer.render(scene, camera);
-            }
-
-            // Handle resize
-            window.addEventListener('resize', () => {
-                camera.aspect = container.clientWidth / container.clientHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(container.clientWidth, container.clientHeight);
-            });
-
-            animate();
-        }
-
-        // Create human figure
-        function createHumanFigure(scene) {
-            const group = new THREE.Group();
-            group.name = 'human';
-            
-            // Body
-            const bodyGeometry = new THREE.CylinderGeometry(0.2, 0.2, 1.5, 8);
-            const bodyMaterial = new THREE.MeshPhongMaterial({ color: 0x4169e1 });
-            const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
-            body.position.y = 0.75;
-            group.add(body);
-            
-            // Head
-            const headGeometry = new THREE.SphereGeometry(0.25, 16, 16);
-            const headMaterial = new THREE.MeshPhongMaterial({ color: 0xffcc99 });
-            const head = new THREE.Mesh(headGeometry, headMaterial);
-            head.position.y = 1.75;
-            group.add(head);
-            
-            // Arms
-            const armGeometry = new THREE.CylinderGeometry(0.07, 0.07, 0.8, 8);
-            const armMaterial = new THREE.MeshPhongMaterial({ color: 0x4169e1 });
-            
-            const leftArm = new THREE.Mesh(armGeometry, armMaterial);
-            leftArm.position.set(-0.4, 1.4, 0);
-            leftArm.rotation.z = Math.PI / 4;
-            group.add(leftArm);
-            
-            const rightArm = new THREE.Mesh(armGeometry, armMaterial);
-            rightArm.position.set(0.4, 1.4, 0);
-            rightArm.rotation.z = -Math.PI / 4;
-            group.add(rightArm);
-            
-            // Legs
-            const legGeometry = new THREE.CylinderGeometry(0.1, 0.1, 1, 8);
-            const legMaterial = new THREE.MeshPhongMaterial({ color: 0x000080 });
-            
-            const leftLeg = new THREE.Mesh(legGeometry, legMaterial);
-            leftLeg.position.set(-0.15, 0, 0);
-            leftLeg.rotation.x = Math.sin(Date.now() * 0.01) * 0.3;
-            group.add(leftLeg);
-            
-            const rightLeg = new THREE.Mesh(legGeometry, legMaterial);
-            rightLeg.position.set(0.15, 0, 0);
-            rightLeg.rotation.x = Math.sin(Date.now() * 0.01 + Math.PI) * 0.3;
-            group.add(rightLeg);
-            
-            // Add to scene
-            group.position.set(0, 0, -2);
-            scene.add(group);
-            
-            // Add face detection indicator
-            const faceIndicatorGeometry = new THREE.RingGeometry(0.3, 0.35, 32);
-            const faceIndicatorMaterial = new THREE.MeshBasicMaterial({ 
-                color: 0x00ff00,
-                side: THREE.DoubleSide,
-                transparent: true,
-                opacity: 0.5
-            });
-            const faceIndicator = new THREE.Mesh(faceIndicatorGeometry, faceIndicatorMaterial);
-            faceIndicator.position.copy(head.position);
-            faceIndicator.position.z = 0.26;
-            faceIndicator.rotation.x = Math.PI / 2;
-            group.add(faceIndicator);
-            
-            // Animate face indicator
-            function animateIndicator() {
-                faceIndicator.scale.x = faceIndicator.scale.y = 1 + 0.2 * Math.sin(Date.now() * 0.005);
-                requestAnimationFrame(animateIndicator);
-            }
-            animateIndicator();
-        }
-
-        // Interactive console typing effect
-        function typeConsole() {
-            const consoleEl = document.getElementById('console');
-            if (!consoleEl) return;
-
-            const lines = [
-                "> Face detected at coordinates (320, 240)",
-                "> Calculating offset...",
-                "> Offset: -12px, Distance: 42cm",
-                "> Sending command: LEFT",
-                "> Motors engaged: LEFT=0.3, RIGHT=0.4",
-                "> Ultrasonic reading: 38cm (SAFE)",
-                "> New face position: (308, 241)",
-                "> Adjusting trajectory...",
-                "> System nominal. All metrics green.",
-                "> Frame processed in 24ms"
-            ];
-
-            let lineIndex = 0;
-            
-            function addLine() {
-                if (lineIndex < lines.length) {
-                    const line = document.createElement('div');
-                    line.className = 'console-line';
-                    line.textContent = lines[lineIndex];
-                    consoleEl.appendChild(line);
-                    lineIndex++;
-                    
-                    consoleEl.scrollTop = consoleEl.scrollHeight;
-                    setTimeout(addLine, 2000 + Math.random() * 1000);
-                } else {
-                    setTimeout(() => {
-                        consoleEl.innerHTML = '<div class="console-line">> System restarted...</div>';
-                        lineIndex = 0;
-                        setTimeout(addLine, 1000);
-                    }, 5000);
-                }
-            }
-
-            setTimeout(addLine, 3000);
-        }
-
-        // Animate metric cards
-        function animateMetrics() {
-            const metrics = document.querySelectorAll('.metric-value');
-            metrics.forEach(metric => {
-                const target = parseFloat(metric.textContent);
-                let current = 0;
-                const increment = target / 50;
-                
-                const update = () => {
-                    if (current < target) {
-                        current += increment;
-                        metric.textContent = Math.round(current) + 
-                            (metric.textContent.includes('ms') ? 'ms' : 
-                             metric.textContent.includes('%') ? '%' : 
-                             metric.textContent.includes('Hz') ? ' Hz' : '');
-                        requestAnimationFrame(update);
-                    }
-                };
-                update();
-            });
-        }
-
-        // Initialize everything
+        // Add floating animation to cards on scroll
         document.addEventListener('DOMContentLoaded', () => {
-            // Remove loader
-            setTimeout(() => {
-                document.querySelector('.loader').style.display = 'none';
-            }, 3000);
-
-            // Initialize 3D robot with human
-            setTimeout(init3DRobot, 500);
+            const cards = document.querySelectorAll('.premium-card');
             
-            // Start console typing
-            setTimeout(typeConsole, 4000);
-            
-            // Animate metrics
-            setTimeout(animateMetrics, 2000);
-
-            // Add hover effects to OOP cards
-            document.querySelectorAll('.oop-card').forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    const colors = ['var(--glow-blue)', 'var(--glow-pink)', 'var(--matrix-green)'];
-                    this.style.boxShadow = `0 0 30px ${colors[Math.floor(Math.random() * colors.length)]}`;
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('floating');
+                    }
                 });
-                
-                card.addEventListener('mouseleave', function() {
-                    this.style.boxShadow = '';
+            }, { threshold: 0.1 });
+            
+            cards.forEach(card => observer.observe(card));
+
+            // Smooth scroll for navigation
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
                 });
             });
+        });
+
+        // Add interactive glow effect
+        document.querySelectorAll('.app-card, .architecture-item').forEach(item => {
+            item.classList.add('glow-effect');
+        });
+
+        // Loading animation
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
         });
     </script>
 </body>
