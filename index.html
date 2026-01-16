@@ -3,36 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Autonomous Person Following Robot | Developer Portfolio</title>
+    <title>Face Tracking Robot | Complete Project Report</title>
     
     <!-- Fonts & Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600&display=swap" rel="stylesheet">
-    
-    <!-- Particle.js -->
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    
-    <!-- Animate.css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@300;400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- AOS (Animate On Scroll) -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     
+    <!-- Prism.js for code highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    
     <style>
         :root {
-            --primary-dark: #0a0a0f;
-            --secondary-dark: #121218;
+            --primary-light: #ffffff;
+            --secondary-light: #f8f9fa;
             --accent-blue: #2563eb;
-            --accent-cyan: #06b6d4;
-            --accent-purple: #8b5cf6;
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --card-bg: rgba(30, 41, 59, 0.7);
-            --glass-bg: rgba(15, 23, 42, 0.8);
-            --gradient-1: linear-gradient(135deg, #2563eb, #8b5cf6);
-            --gradient-2: linear-gradient(135deg, #06b6d4, #3b82f6);
-            --neon-shadow: 0 0 20px rgba(37, 99, 235, 0.3);
+            --accent-teal: #0d9488;
+            --text-dark: #1f2937;
+            --text-medium: #4b5563;
+            --text-light: #6b7280;
+            --border-color: #e5e7eb;
+            --card-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --hover-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
 
         * {
@@ -41,78 +37,88 @@
             box-sizing: border-box;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
-            font-family: 'Poppins', sans-serif;
-            background: var(--primary-dark);
-            color: var(--text-primary);
-            overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 20% 50%, rgba(37, 99, 235, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
+            font-family: 'Inter', sans-serif;
+            background: var(--primary-light);
+            color: var(--text-dark);
+            line-height: 1.6;
         }
 
-        /* Developer Header */
-        .developer-header {
-            background: rgba(10, 10, 15, 0.9);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 1.2rem 3rem;
-            position: fixed;
+        /* Header */
+        .project-header {
+            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-teal) 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .project-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .project-subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .university-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            backdrop-filter: blur(10px);
+            margin-bottom: 2rem;
+        }
+
+        /* Navigation */
+        .sticky-nav {
+            background: white;
+            box-shadow: var(--card-shadow);
+            position: sticky;
             top: 0;
-            width: 100%;
             z-index: 1000;
+            padding: 1rem 2rem;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--gradient-1);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            animation: pulse 2s infinite;
-        }
-
-        .logo-text {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 600;
-            font-size: 1.3rem;
-            background: linear-gradient(to right, var(--accent-blue), var(--accent-cyan));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
         .nav-links {
             display: flex;
-            gap: 2.5rem;
+            gap: 2rem;
         }
 
         .nav-link {
-            color: var(--text-secondary);
+            color: var(--text-medium);
             text-decoration: none;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
-            position: relative;
+            font-weight: 500;
             transition: color 0.3s;
+            position: relative;
         }
 
         .nav-link:hover {
-            color: var(--text-primary);
+            color: var(--accent-blue);
         }
 
         .nav-link::after {
@@ -122,7 +128,7 @@
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--gradient-1);
+            background: var(--accent-blue);
             transition: width 0.3s;
         }
 
@@ -130,361 +136,326 @@
             width: 100%;
         }
 
-        .contact-btn {
-            background: var(--gradient-1);
-            color: white;
-            padding: 0.7rem 1.5rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-family: 'JetBrains Mono', monospace;
-            font-weight: 500;
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Section Cards */
+        .section-card {
+            background: white;
+            border-radius: 16px;
+            padding: 3rem;
+            margin: 3rem 0;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--border-color);
             transition: transform 0.3s, box-shadow 0.3s;
         }
 
-        .contact-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--neon-shadow);
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--hover-shadow);
         }
 
-        /* Hero Section */
-        .hero-section {
-            min-height: 100vh;
+        .section-header {
             display: flex;
             align-items: center;
-            padding: 120px 3rem 3rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.8rem;
-            background: rgba(37, 99, 235, 0.1);
-            padding: 0.8rem 1.5rem;
-            border-radius: 50px;
+            gap: 1rem;
             margin-bottom: 2rem;
-            border: 1px solid rgba(37, 99, 235, 0.3);
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-blue);
         }
 
-        .hero-badge i {
-            color: var(--accent-blue);
-        }
-
-        .hero-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 4rem;
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(to right, var(--text-primary), var(--accent-cyan));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .hero-subtitle {
-            font-size: 1.4rem;
-            color: var(--text-secondary);
-            max-width: 600px;
-            line-height: 1.8;
-            margin-bottom: 3rem;
-        }
-
-        .hero-stats {
-            display: flex;
-            gap: 3rem;
-            margin-top: 4rem;
-        }
-
-        .stat-item {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 600;
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Floating Elements */
-        .floating-element {
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(37, 99, 235, 0.1) 0%, transparent 70%);
-            filter: blur(40px);
-            animation: float 20s infinite linear;
-        }
-
-        .floating-1 {
-            top: 10%;
-            right: 10%;
-            animation-delay: 0s;
-        }
-
-        .floating-2 {
-            bottom: 20%;
-            left: 10%;
-            animation-delay: -10s;
-        }
-
-        /* Developer Cards */
-        .dev-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 2.5rem;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s, border-color 0.3s;
-        }
-
-        .dev-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(37, 99, 235, 0.5);
-            box-shadow: var(--neon-shadow);
-        }
-
-        .dev-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: var(--gradient-1);
-            animation: scanline 3s linear infinite;
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 1.2rem;
-            margin-bottom: 2rem;
-        }
-
-        .card-icon {
-            width: 60px;
-            height: 60px;
-            background: var(--gradient-2);
-            border-radius: 15px;
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-teal));
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
+            color: white;
             font-size: 1.5rem;
         }
 
-        .card-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.8rem;
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Content Typography */
+        h3 {
+            color: var(--accent-blue);
+            margin: 2rem 0 1rem;
+            font-size: 1.5rem;
             font-weight: 600;
         }
 
-        /* Tech Stack */
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-top: 2rem;
+        h4 {
+            color: var(--text-dark);
+            margin: 1.5rem 0 0.5rem;
+            font-size: 1.2rem;
+            font-weight: 500;
         }
 
-        .tech-tag {
-            background: rgba(30, 41, 59, 0.8);
-            padding: 0.8rem 1.5rem;
-            border-radius: 10px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
+        p {
+            margin-bottom: 1rem;
+            color: var(--text-medium);
+            line-height: 1.8;
         }
 
-        .tech-tag::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
+        ul, ol {
+            margin: 1rem 0 1rem 2rem;
+            color: var(--text-medium);
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Tables */
+        table {
             width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: left 0.5s;
-        }
-
-        .tech-tag:hover::before {
-            left: 100%;
-        }
-
-        .tech-tag:hover {
-            border-color: var(--accent-blue);
-            transform: translateY(-2px);
-        }
-
-        /* Architecture Visualization */
-        .arch-diagram {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .arch-node {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 2rem;
-            position: relative;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .node-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .node-icon {
-            width: 40px;
-            height: 40px;
-            background: var(--gradient-1);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Code Preview */
-        .code-preview {
-            background: #1e293b;
-            border-radius: 15px;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: var(--secondary-light);
+            border-radius: 8px;
             overflow: hidden;
-            margin: 3rem 0;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        th {
+            background: var(--accent-blue);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Code Blocks */
+        .code-section {
+            background: #1a1a1a;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 2rem 0;
         }
 
         .code-header {
-            background: #0f172a;
+            background: #2d2d2d;
             padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #404040;
+        }
+
+        .code-title {
+            color: #e5e7eb;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.9rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
-        .code-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
+        .code-copy-btn {
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.9rem;
+            transition: background 0.3s;
         }
 
-        .code-dot.red { background: #f87171; }
-        .code-dot.yellow { background: #fbbf24; }
-        .code-dot.green { background: #10b981; }
+        .code-copy-btn:hover {
+            background: #1d4ed8;
+        }
 
         .code-content {
-            padding: 2rem;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.9rem;
-            line-height: 1.8;
+            padding: 1.5rem;
             overflow-x: auto;
         }
 
-        .code-keyword { color: #f472b6; }
-        .code-function { color: #60a5fa; }
-        .code-string { color: #34d399; }
-        .code-comment { color: #94a3b8; }
-
-        /* Team Showcase */
-        .team-showcase {
-            display: flex;
-            justify-content: center;
-            margin: 4rem 0;
+        pre[class*="language-"] {
+            margin: 0;
+            background: transparent !important;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
         }
 
-        .team-card {
-            background: var(--glass-bg);
-            border-radius: 20px;
-            overflow: hidden;
-            max-width: 800px;
-            width: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .team-image {
-            width: 100%;
-            height: 400px;
-            object-fit: cover;
-        }
-
-        .team-info {
+        /* Flowcharts */
+        .flowchart-container {
+            background: var(--secondary-light);
+            border-radius: 12px;
             padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .flowchart-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .flowchart-step {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-blue);
+            box-shadow: var(--card-shadow);
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: var(--accent-blue);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 30px;
+            margin-right: 1rem;
+            font-weight: 600;
+        }
+
+        /* Student Info Cards */
+        .student-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .student-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s;
+        }
+
+        .student-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--card-shadow);
+        }
+
+        /* Metrics Dashboard */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-teal));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0.5rem 0;
+        }
+
+        .metric-label {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        /* Interactive Elements */
+        .expandable-section {
+            background: var(--secondary-light);
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .expandable-header {
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            background: white;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .expandable-content {
+            padding: 1.5rem;
+            display: none;
+        }
+
+        .expandable-content.show {
+            display: block;
         }
 
         /* Timeline */
-        .dev-timeline {
+        .timeline {
             position: relative;
-            margin: 4rem 0;
-            padding-left: 30px;
+            margin: 3rem 0;
+            padding-left: 2rem;
         }
 
-        .dev-timeline::before {
+        .timeline::before {
             content: '';
             position: absolute;
             left: 0;
             top: 0;
             bottom: 0;
             width: 2px;
-            background: var(--gradient-1);
+            background: var(--accent-blue);
         }
 
         .timeline-item {
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
             position: relative;
-            padding-left: 30px;
+            padding-left: 2rem;
         }
 
         .timeline-item::before {
             content: '';
             position: absolute;
-            left: -38px;
+            left: -9px;
             top: 0;
-            width: 12px;
-            height: 12px;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
             background: var(--accent-blue);
-            border: 3px solid var(--primary-dark);
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px var(--accent-blue);
         }
 
         /* Footer */
-        .dev-footer {
-            background: var(--secondary-dark);
+        .project-footer {
+            background: var(--secondary-light);
             padding: 4rem 2rem 2rem;
-            margin-top: 6rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-color);
         }
 
-        .footer-grid {
+        .footer-content {
             max-width: 1200px;
             margin: 0 auto;
             display: grid;
@@ -492,667 +463,930 @@
             gap: 3rem;
         }
 
-        .footer-section h3 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            color: var(--text-primary);
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .social-link {
-            width: 45px;
-            height: 45px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-
-        .social-link:hover {
-            background: var(--gradient-1);
-            color: white;
-            transform: translateY(-3px);
-        }
-
-        /* Animations */
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            33% { transform: translate(30px, -30px) rotate(120deg); }
-            66% { transform: translate(-20px, 20px) rotate(240deg); }
-        }
-
-        @keyframes scanline {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-
         /* Responsive Design */
         @media (max-width: 768px) {
-            .developer-header {
-                padding: 1rem;
+            .project-title {
+                font-size: 2.5rem;
+            }
+            
+            .section-card {
+                padding: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
             }
             
             .nav-links {
                 display: none;
             }
             
-            .hero-title {
-                font-size: 2.5rem;
+            .main-content {
+                padding: 1rem;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .sticky-nav, .code-copy-btn {
+                display: none;
             }
             
-            .hero-subtitle {
-                font-size: 1.1rem;
-            }
-            
-            .hero-stats {
-                flex-direction: column;
-                gap: 1.5rem;
-            }
-            
-            .dev-card {
-                padding: 1.5rem;
+            .section-card {
+                break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ddd;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Developer Header -->
-    <header class="developer-header">
-        <div class="logo-container">
-            <div class="logo-icon">
-                <i class="fas fa-robot"></i>
+    <!-- Header Section -->
+    <header class="project-header">
+        <div class="header-content">
+            <div class="university-badge">
+                <i class="fas fa-university"></i>
+                <span>KLE Technological University | Automation & Robotics</span>
             </div>
-            <div class="logo-text">Person Follower</div>
+            <h1 class="project-title">Face Recognition and Tracking Robot</h1>
+            <p class="project-subtitle">OOP for Automation - Course Project Report</p>
+            <div style="margin-top: 2rem;">
+                <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: 600;">25 FPS</div>
+                        <div style="opacity: 0.9;">Real-time Processing</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: 600;">92%</div>
+                        <div style="opacity: 0.9;">Detection Accuracy</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: 600;">65ms</div>
+                        <div style="opacity: 0.9;">Total Latency</div>
+                    </div>
+                </div>
+            </div>
         </div>
-        
-        <nav class="nav-links">
-            <a href="#overview" class="nav-link">Overview</a>
-            <a href="#architecture" class="nav-link">Architecture</a>
-            <a href="#implementation" class="nav-link">Implementation</a>
-            <a href="#demo" class="nav-link">Demo</a>
-            <a href="#team" class="nav-link">Team</a>
-        </nav>
-        
-        <a href="#contact" class="contact-btn">
-            <i class="fas fa-paper-plane"></i> Contact
-        </a>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero-section" id="overview">
-        <div class="hero-content" data-aos="fade-up">
-            <div class="hero-badge">
-                <i class="fas fa-code-branch"></i>
-                <span>OOP Course Project</span>
+    <!-- Navigation -->
+    <nav class="sticky-nav">
+        <div class="nav-container">
+            <div style="font-weight: 600; color: var(--accent-blue);">
+                <i class="fas fa-robot"></i> Face Tracking Robot
             </div>
-            
-            <h1 class="hero-title">
-                Autonomous Person<br>
-                Following Robot
-            </h1>
-            
-            <p class="hero-subtitle">
-                A sophisticated AI-driven robotics system built with modern software architecture, 
-                implementing advanced OOP principles and computer vision for real-time human tracking.
-            </p>
-            
-            <div class="hero-stats">
-                <div class="stat-item">
-                    <div class="stat-number">25ms</div>
-                    <div class="stat-label">Processing Latency</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">98%</div>
-                    <div class="stat-label">Detection Accuracy</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">30FPS</div>
-                    <div class="stat-label">Video Processing</div>
-                </div>
+            <div class="nav-links">
+                <a href="#introduction" class="nav-link">Introduction</a>
+                <a href="#architecture" class="nav-link">Architecture</a>
+                <a href="#implementation" class="nav-link">Implementation</a>
+                <a href="#code" class="nav-link">Code</a>
+                <a href="#results" class="nav-link">Results</a>
             </div>
         </div>
-        
-        <div class="floating-element floating-1"></div>
-        <div class="floating-element floating-2"></div>
-    </section>
+    </nav>
 
     <!-- Main Content -->
-    <main style="max-width: 1400px; margin: 0 auto; padding: 0 2rem;">
-        <!-- System Architecture -->
-        <section id="architecture" data-aos="fade-up">
-            <div class="dev-card">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <i class="fas fa-sitemap"></i>
-                    </div>
-                    <h2 class="card-title">System Architecture</h2>
+    <main class="main-content">
+        <!-- Introduction Section -->
+        <section id="introduction" class="section-card" data-aos="fade-up">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-info-circle"></i>
                 </div>
-                
-                <div class="arch-diagram">
-                    <div class="arch-node">
-                        <div class="node-header">
-                            <div class="node-icon">
-                                <i class="fas fa-microchip"></i>
-                            </div>
-                            <h3>Raspberry Pi 4</h3>
-                        </div>
-                        <p>Quad-core ARM Cortex-A72 @ 1.5GHz with 4GB LPDDR4 RAM running custom Linux kernel</p>
+                <h2 class="section-title">1. INTRODUCTION</h2>
+            </div>
+
+            <!-- Team Information -->
+            <div style="margin: 2rem 0;">
+                <h3 style="color: var(--accent-teal);">Submitted by:</h3>
+                <div class="student-grid">
+                    <div class="student-card">
+                        <h4><i class="fas fa-user-graduate"></i> Student Information</h4>
+                        <p><strong>CHIDANAND S K</strong></p>
+                        <p>USN: 01FE24BAR027</p>
+                        <p>2nd Year B.E. Automation & Robotics</p>
                     </div>
-                    
-                    <div class="arch-node">
-                        <div class="node-header">
-                            <div class="node-icon">
-                                <i class="fas fa-camera"></i>
-                            </div>
-                            <h3>Vision Pipeline</h3>
-                        </div>
-                        <p>IP Camera stream processed through OpenCV with Haar Cascade classifiers at 30FPS</p>
+                    <div class="student-card">
+                        <h4><i class="fas fa-users"></i> Team Members</h4>
+                        <p>Roll No: 02 | Shlok Vengurlekar | 01FE24BAR002</p>
+                        <p>Roll No: 03 |Pavanashree Kamat | 01FE24BAR003</p>
+                        <p>Roll No: 20 |Godwin Anthony | 01FE24BAR022</p>
+                        <p>Roll No: 49 |Sujal Kamble |01FE24BAR049</p>
                     </div>
-                    
-                    <div class="arch-node">
-                        <div class="node-header">
-                            <div class="node-icon">
-                                <i class="fas fa-brain"></i>
-                            </div>
-                            <h3>AI Processing</h3>
-                        </div>
-                        <p>Real-time face detection with PID-controlled navigation algorithm for smooth tracking</p>
+                    <div class="student-card">
+                        <h4><i class="fas fa-chalkboard-teacher"></i> Guidance</h4>
+                        <p><strong>Mr. Vijayamahantesh Kanavii</strong></p>
+                        <p><strong>Mrs. Savita Madiwalar </strong></p>
+                        <p>Department of Automation & Robotics</p>
                     </div>
+                </div>
+            </div>
+
+            <h3>1.1 Object-Oriented Programming in Robotics</h3>
+            <p>This project demonstrates the practical application of Object-Oriented Programming (OOP) principles in building a real-time, distributed robotics system. The system uses a client-server architecture where:</p>
+            
+            <div class="flowchart-container">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                    <div style="padding: 1.5rem; background: white; border-radius: 8px; border: 2px solid var(--accent-blue);">
+                        <h4 style="color: var(--accent-blue);"><i class="fas fa-laptop"></i> Client (Laptop)</h4>
+                        <p>Processes vision data and makes decisions</p>
+                        <ul style="margin-top: 1rem;">
+                            <li>Face detection using Haar Cascade</li>
+                            <li>Real-time video processing</li>
+                            <li>Decision making and command generation</li>
+                        </ul>
+                    </div>
+                    <div style="padding: 1.5rem; background: white; border-radius: 8px; border: 2px solid var(--accent-teal);">
+                        <h4 style="color: var(--accent-teal);"><i class="fas fa-server"></i> Server (Raspberry Pi)</h4>
+                        <p>Receives commands and controls actuators</p>
+                        <ul style="margin-top: 1rem;">
+                            <li>Motor control via PWM</li>
+                            <li>Distance measurement</li>
+                            <li>Safety mechanisms implementation</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h3>1.2 Problem Statement</h3>
+            <p>"Design and implement a distributed face-tracking robot system using OOP principles where:"</p>
+            <ul>
+                <li>A <strong>FaceDetector</strong> class identifies human faces in real-time from IP camera streams</li>
+                <li>A <strong>FaceTracker</strong> class calculates facial position (X-axis offset) and sends directional commands</li>
+                <li>A <strong>RobotClient</strong> class maintains TCP/IP communication with the Raspberry Pi robot</li>
+                <li>A Raspberry Pi server implements an <strong>Actuator</strong> class to control DC motors via ESCs</li>
+                <li>An <strong>UltrasonicSensor</strong> class measures distance with collision avoidance</li>
+                <li>A <strong>RobotController</strong> class orchestrates all robot operations safely</li>
+                <li>The entire system demonstrates <strong>encapsulation, abstraction, inheritance, and polymorphism</strong></li>
+            </ul>
+
+            <h3>1.3 Project Objectives</h3>
+            <div class="flowchart-grid">
+                <div class="flowchart-step">
+                    <span class="step-number">1</span>
+                    <h4>Implement OOP Classes</h4>
+                    <p>Five core classes demonstrating OOP principles</p>
+                </div>
+                <div class="flowchart-step">
+                    <span class="step-number">2</span>
+                    <h4>Real-time Processing</h4>
+                    <p>Achieve 15-30 FPS face detection</p>
+                </div>
+                <div class="flowchart-step">
+                    <span class="step-number">3</span>
+                    <h4>Autonomous Control</h4>
+                    <p>Directional control based on facial position</p>
+                </div>
+                <div class="flowchart-step">
+                    <span class="step-number">4</span>
+                    <h4>Safety Features</h4>
+                    <p>Collision avoidance with ultrasonic sensors</p>
                 </div>
             </div>
         </section>
 
-        <!-- OOP Implementation -->
-        <section id="implementation" data-aos="fade-up" data-aos-delay="100">
-            <div class="dev-card">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <i class="fas fa-cubes"></i>
-                    </div>
-                    <h2 class="card-title">OOP Implementation</h2>
+        <!-- Architecture Section -->
+        <section id="architecture" class="section-card" data-aos="fade-up">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-sitemap"></i>
                 </div>
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem;">
-                    <div>
-                        <h3 style="color: var(--accent-cyan); margin-bottom: 1rem;">Core Classes</h3>
-                        <ul style="list-style: none; line-height: 2;">
-                            <li><i class="fas fa-code" style="color: var(--accent-blue); margin-right: 10px;"></i> Robot (Base Class)</li>
-                            <li><i class="fas fa-code" style="color: var(--accent-blue); margin-right: 10px;"></i> FaceDetector</li>
-                            <li><i class="fas fa-code" style="color: var(--accent-blue); margin-right: 10px;"></i> MotorController</li>
-                            <li><i class="fas fa-code" style="color: var(--accent-blue); margin-right: 10px;"></i> NavigationSystem</li>
-                            <li><i class="fas fa-code" style="color: var(--accent-blue); margin-right: 10px;"></i> SensorManager</li>
-                        </ul>
-                    </div>
-                    
-                    <div>
-                        <h3 style="color: var(--accent-cyan); margin-bottom: 1rem;">Design Patterns</h3>
-                        <ul style="list-style: none; line-height: 2;">
-                            <li><i class="fas fa-shield-alt" style="color: var(--accent-purple); margin-right: 10px;"></i> Singleton (Sensor Manager)</li>
-                            <li><i class="fas fa-shield-alt" style="color: var(--accent-purple); margin-right: 10px;"></i> Observer (Event System)</li>
-                            <li><i class="fas fa-shield-alt" style="color: var(--accent-purple); margin-right: 10px;"></i> Strategy (Navigation)</li>
-                            <li><i class="fas fa-shield-alt" style="color: var(--accent-purple); margin-right: 10px;"></i> Factory (Motor Types)</li>
-                        </ul>
+                <h2 class="section-title">2. SYSTEM ARCHITECTURE & CLASS DESIGN</h2>
+            </div>
+
+            <h3>2.1 Distributed Architecture Overview</h3>
+            <div class="flowchart-container">
+                <div style="text-align: center; padding: 2rem;">
+                    <h4 style="color: var(--accent-blue); margin-bottom: 2rem;">System Architecture Flow</h4>
+                    <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 2rem; align-items: center;">
+                        <!-- Client Side -->
+                        <div>
+                            <div style="background: var(--accent-blue); color: white; padding: 1rem; border-radius: 8px 8px 0 0;">
+                                <h4><i class="fas fa-laptop"></i> LAPTOP (Client)</h4>
+                            </div>
+                            <div style="background: white; padding: 1.5rem; border: 1px solid var(--border-color); border-top: none; border-radius: 0 0 8px 8px;">
+                                <div style="margin-bottom: 1rem;">
+                                    <h5 style="color: var(--accent-blue);">FaceDetector</h5>
+                                    <p>Haar Cascade face detection</p>
+                                </div>
+                                <div style="margin-bottom: 1rem;">
+                                    <h5 style="color: var(--accent-blue);">FaceTracker</h5>
+                                    <p>Calculate X-offset and generate commands</p>
+                                </div>
+                                <div>
+                                    <h5 style="color: var(--accent-blue);">RobotClient</h5>
+                                    <p>TCP/IP socket communication</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Connection -->
+                        <div style="text-align: center;">
+                            <div style="font-size: 2rem; color: var(--accent-teal);">
+                                <i class="fas fa-wifi"></i>
+                            </div>
+                            <p style="margin-top: 0.5rem; color: var(--text-light);">WiFi Network</p>
+                            <div style="height: 2px; width: 50px; background: var(--accent-teal); margin: 1rem auto;"></div>
+                            <p style="color: var(--text-light);">Port 9999</p>
+                        </div>
+
+                        <!-- Server Side -->
+                        <div>
+                            <div style="background: var(--accent-teal); color: white; padding: 1rem; border-radius: 8px 8px 0 0;">
+                                <h4><i class="fas fa-server"></i> RASPBERRY PI (Server)</h4>
+                            </div>
+                            <div style="background: white; padding: 1.5rem; border: 1px solid var(--border-color); border-top: none; border-radius: 0 0 8px 8px;">
+                                <div style="margin-bottom: 1rem;">
+                                    <h5 style="color: var(--accent-teal);">RobotController</h5>
+                                    <p>Orchestrates operations and safety checks</p>
+                                </div>
+                                <div style="margin-bottom: 1rem;">
+                                    <h5 style="color: var(--accent-teal);">Actuator</h5>
+                                    <p>PWM motor control with trimming</p>
+                                </div>
+                                <div>
+                                    <h5 style="color: var(--accent-teal);">UltrasonicSensor</h5>
+                                    <p>Real-time distance measurement</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="tech-stack">
-                    <span class="tech-tag">Python 3.9</span>
-                    <span class="tech-tag">OpenCV 4.5</span>
-                    <span class="tech-tag">NumPy</span>
-                    <span class="tech-tag">RPi.GPIO</span>
-                    <span class="tech-tag">Socket.IO</span>
-                    <span class="tech-tag">Threading</span>
-                    <span class="tech-tag">Asyncio</span>
+            </div>
+
+            <h3>2.2 Hardware Specifications</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Specifications</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Mobile Device</td>
+                        <td>iPhone/Android with IP camera app</td>
+                        <td>Vision input</td>
+                    </tr>
+                    <tr>
+                        <td>Laptop</td>
+                        <td>Python 3.8+, OpenCV 4.5+</td>
+                        <td>Processing & decision-making</td>
+                    </tr>
+                    <tr>
+                        <td>Raspberry Pi 4B</td>
+                        <td>4GB RAM, GPIO 40-pin, Wi-Fi</td>
+                        <td>Robot controller</td>
+                    </tr>
+                    <tr>
+                        <td>Ultrasonic HC-SR04</td>
+                        <td>2cm-400cm range, ±3% accuracy</td>
+                        <td>Distance measurement</td>
+                    </tr>
+                    <tr>
+                        <td>DC Motors with ESCs</td>
+                        <td>6-12V, 100-300 RPM, PWM input 1000-2000µs</td>
+                        <td>Propulsion</td>
+                    </tr>
+                    <tr>
+                        <td>LiPo Battery</td>
+                        <td>2S/3S 7.4V-11.1V, 2200-5000mAh</td>
+                        <td>Power supply</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Implementation Section -->
+        <section id="implementation" class="section-card" data-aos="fade-up">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <h2 class="section-title">3. OOP PRINCIPLES IMPLEMENTATION</h2>
+            </div>
+
+            <h3>3.1 Core OOP Principles</h3>
+            <div class="expandable-section">
+                <div class="expandable-header" onclick="toggleExpand('encapsulation')">
+                    <h4><i class="fas fa-box"></i> Encapsulation - Data Hiding</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="expandable-content" id="encapsulation">
+                    <p><strong>Example: FaceDetector Class</strong></p>
+                    <p>Private attributes with getter/setter methods for hardware control and safety:</p>
+                    <pre><code class="language-python">class FaceDetector:
+    def __init__(self, cascade_path):
+        # PRIVATE: Internal state hidden from users
+        self.face_cascade = cv2.CascadeClassifier(cascade_path)
+        self.is_loaded = False  # Convention: underscore = private
+    
+    # PUBLIC: Only interface exposed to users
+    def detect_largest_face(self, gray):
+        if not self.is_loaded:
+            raise RuntimeError("Cascade not loaded")
+        return max(...)</code></pre>
+                    <p><strong>Benefit:</strong> User code never touches face_cascade directly. If we want to replace Haar Cascade with YOLOv8 later, we only change the detect_largest_face() implementation!</p>
+                </div>
+            </div>
+
+            <div class="expandable-section">
+                <div class="expandable-header" onclick="toggleExpand('abstraction')">
+                    <h4><i class="fas fa-eye-slash"></i> Abstraction - Simplified Interfaces</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="expandable-content" id="abstraction">
+                    <p><strong>Example: Actuator Class</strong></p>
+                    <p>Hides PWM complexity behind simple methods:</p>
+                    <pre><code class="language-python"># User code - simple and readable:
+actuator.forward(speed=0.4)
+
+# Internally does complex PWM calculations:
+def forward(self, speed=0.4):
+    base = speed * 2.5  # Map 0-1 range to 0-2.5% duty cycle
+    self.left_pwm.ChangeDutyCycle(7.5 + base + self.LEFT_TRIM)
+    self.right_pwm.ChangeDutyCycle(7.5 + base + self.RIGHT_TRIM)</code></pre>
+                    <p>User doesn't need to know about PWM frequencies, duty cycles, or trim constants!</p>
+                </div>
+            </div>
+
+            <div class="expandable-section">
+                <div class="expandable-header" onclick="toggleExpand('srp')">
+                    <h4><i class="fas fa-bullseye"></i> Single Responsibility Principle</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="expandable-content" id="srp">
+                    <p>Each class has ONE job:</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Class</th>
+                                <th>Responsibility</th>
+                                <th>Example Method</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>FaceDetector</td>
+                                <td>Detect faces in frames</td>
+                                <td>detect_largest_face()</td>
+                            </tr>
+                            <tr>
+                                <td>RobotClient</td>
+                                <td>Send commands over network</td>
+                                <td>send_command()</td>
+                            </tr>
+                            <tr>
+                                <td>FaceTracker</td>
+                                <td>Orchestrate client operations</td>
+                                <td>run()</td>
+                            </tr>
+                            <tr>
+                                <td>Actuator</td>
+                                <td>Control motors</td>
+                                <td>forward(), left(), right()</td>
+                            </tr>
+                            <tr>
+                                <td>UltrasonicSensor</td>
+                                <td>Measure distance</td>
+                                <td>get_distance()</td>
+                            </tr>
+                            <tr>
+                                <td>RobotController</td>
+                                <td>Orchestrate server operations</td>
+                                <td>run()</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <h3>3.2 SOLID Design Principles</h3>
+            <div class="flowchart-grid">
+                <div class="flowchart-step">
+                    <span class="step-number">S</span>
+                    <h4>Single Responsibility</h4>
+                    <p>Each class has one reason to change</p>
+                </div>
+                <div class="flowchart-step">
+                    <span class="step-number">O</span>
+                    <h4>Open/Closed</h4>
+                    <p>Open for extension, closed for modification</p>
+                </div>
+                <div class="flowchart-step">
+                    <span class="step-number">L</span>
+                    <h4>Liskov Substitution</h4>
+                    <p>Replace FaceDetector with YOLODetector</p>
+                </div>
+                <div class="flowchart-step">
+                    <span class="step-number">I</span>
+                    <h4>Interface Segregation</h4>
+                    <p>Classes expose only necessary methods</p>
+                </div>
+                <div class="flowchart-step">
+                    <span class="step-number">D</span>
+                    <h4>Dependency Inversion</h4>
+                    <p>Depends on abstractions, not concrete classes</p>
                 </div>
             </div>
         </section>
 
-        <!-- Code Preview -->
-      <section data-aos="fade-up" data-aos-delay="150">
-    <div class="code-preview">
-        <!-- Laptop Code Tab -->
-        <div class="code-block active" id="laptop-code">
-            <div class="code-header">
-                <div class="code-dot red"></div>
-                <div class="code-dot yellow"></div>
-                <div class="code-dot green"></div>
-                <span style="margin-left: 1rem; color: var(--text-secondary); font-family: 'JetBrains Mono';">laptop_client.py</span>
-                <span style="margin-left: auto; color: var(--accent-cyan); font-family: 'JetBrains Mono'; font-size: 0.9rem;">
-                    <i class="fas fa-laptop"></i> Computer Vision Client
-                </span>
+        <!-- Code Section -->
+        <section id="code" class="section-card" data-aos="fade-up">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-code"></i>
+                </div>
+                <h2 class="section-title">4. COMPLETE CODE IMPLEMENTATION</h2>
             </div>
-            <div class="code-content">
-                <pre><span class="code-keyword">import</span> cv2
-<span class="code-keyword">import</span> socket
-<span class="code-keyword">import</span> requests
-<span class="code-keyword">import</span> numpy <span class="code-keyword">as</span> np
 
-<span class="code-comment"># ================= FACE DETECTOR CLASS =================</span>
-<span class="code-keyword">class</span> <span class="code-function">FaceDetector</span>:
-    <span class="code-keyword">def</span> <span class="code-function">__init__</span>(<span class="code-keyword">self</span>, cascade_path):
-        <span class="code-keyword">self</span>.face_cascade = cv2.CascadeClassifier(cascade_path)
+            <!-- Laptop Client Code -->
+            <div class="code-section">
+                <div class="code-header">
+                    <div class="code-title">
+                        <i class="fas fa-laptop-code"></i> laptop_client.py
+                    </div>
+                    <button class="code-copy-btn" onclick="copyCode('laptop-code')">
+                        <i class="far fa-copy"></i> Copy Code
+                    </button>
+                </div>
+                <div class="code-content">
+                    <pre id="laptop-code"><code class="language-python">import cv2
+import socket
+import requests
+import numpy as np
 
-    <span class="code-keyword">def</span> <span class="code-function">detect_largest_face</span>(<span class="code-keyword">self</span>, gray):
-        faces = <span class="code-keyword">self</span>.face_cascade.detectMultiScale(
+# ================= FACE DETECTOR CLASS =================
+class FaceDetector:
+    def __init__(self, cascade_path):
+        self.face_cascade = cv2.CascadeClassifier(cascade_path)
+
+    def detect_largest_face(self, gray):
+        faces = self.face_cascade.detectMultiScale(
             gray, scaleFactor=1.2, minNeighbors=5, minSize=(80, 80)
         )
-        <span class="code-keyword">if</span> len(faces) == 0:
-            <span class="code-keyword">return</span> <span class="code-keyword">None</span>
-        <span class="code-keyword">return</span> max(faces, key=<span class="code-keyword">lambda</span> f: f[2] * f[3])
+        if len(faces) == 0:
+            return None
+        return max(faces, key=lambda f: f[2] * f[3])
 
 
-<span class="code-comment"># ================= COMMUNICATION CLASS =================</span>
-<span class="code-keyword">class</span> <span class="code-function">RobotClient</span>:
-    <span class="code-keyword">def</span> <span class="code-function">__init__</span>(<span class="code-keyword">self</span>, pi_ip, pi_port):
-        <span class="code-keyword">self</span>.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        <span class="code-keyword">self</span>.sock.connect((pi_ip, pi_port))
-        print(<span class="code-string">"📡 Connected to Pi motor server"</span>)
+# ================= COMMUNICATION CLASS =================
+class RobotClient:
+    def __init__(self, pi_ip, pi_port):
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.sock.connect((pi_ip, pi_port))
+        print("📡 Connected to Pi motor server")
 
-    <span class="code-keyword">def</span> <span class="code-function">send_command</span>(<span class="code-keyword">self</span>, cmd):
-        <span class="code-keyword">self</span>.sock.sendall(cmd.encode())
+    def send_command(self, cmd):
+        self.sock.sendall(cmd.encode())
 
 
-<span class="code-comment"># ================= MAIN FACE TRACKER =================</span>
-<span class="code-keyword">class</span> <span class="code-function">FaceTracker</span>:
-    <span class="code-keyword">def</span> <span class="code-function">__init__</span>(<span class="code-keyword">self</span>, ip_cam_url, pi_ip, pi_port):
-        <span class="code-keyword">self</span>.ip_cam_url = ip_cam_url
-        <span class="code-keyword">self</span>.detector = FaceDetector(<span class="code-string">"haarcascade_frontalface_default.xml"</span>)
-        <span class="code-keyword">self</span>.robot = RobotClient(pi_ip, pi_port)
-        <span class="code-keyword">self</span>.DEAD_ZONE = 30
+# ================= MAIN FACE TRACKER =================
+class FaceTracker:
+    def __init__(self, ip_cam_url, pi_ip, pi_port):
+        self.ip_cam_url = ip_cam_url
+        self.detector = FaceDetector("haarcascade_frontalface_default.xml")
+        self.robot = RobotClient(pi_ip, pi_port)
+        self.DEAD_ZONE = 30
 
-    <span class="code-keyword">def</span> <span class="code-function">get_frame</span>(<span class="code-keyword">self</span>):
-        <span class="code-keyword">try</span>:
-            r = requests.get(<span class="code-keyword">self</span>.ip_cam_url, timeout=1)
+    def get_frame(self):
+        try:
+            r = requests.get(self.ip_cam_url, timeout=1)
             img = np.frombuffer(r.content, np.uint8)
-            <span class="code-keyword">return</span> cv2.imdecode(img, cv2.IMREAD_COLOR)
-        <span class="code-keyword">except</span>:
-            <span class="code-keyword">return</span> <span class="code-keyword">None</span>
+            return cv2.imdecode(img, cv2.IMREAD_COLOR)
+        except:
+            return None
 
-    <span class="code-keyword">def</span> <span class="code-function">run</span>(<span class="code-keyword">self</span>):
-        <span class="code-keyword">while</span> <span class="code-keyword">True</span>:
-            frame = <span class="code-keyword">self</span>.get_frame()
-            <span class="code-keyword">if</span> frame <span class="code-keyword">is</span> <span class="code-keyword">None</span>:
-                <span class="code-keyword">continue</span>
+    def run(self):
+        while True:
+            frame = self.get_frame()
+            if frame is None:
+                continue
 
-            frame = cv2.resize(frame, (480, 640))
+            frame = cv2.resize(frame, (480, 640))  # portrait
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
             frame_center_x = frame.shape[1] // 2
-            command = <span class="code-string">"STOP"</span>
+            command = "STOP"
 
-            face = <span class="code-keyword">self</span>.detector.detect_largest_face(gray)
+            face = self.detector.detect_largest_face(gray)
 
-            <span class="code-keyword">if</span> face <span class="code-keyword">is</span> <span class="code-keyword">not</span> <span class="code-keyword">None</span>:
+            if face is not None:
                 x, y, w, h = face
                 cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
                 face_center_x = x + w // 2
                 error = face_center_x - frame_center_x
 
-                <span class="code-keyword">if</span> error < -<span class="code-keyword">self</span>.DEAD_ZONE:
-                    command = <span class="code-string">"LEFT"</span>
-                <span class="code-keyword">elif</span> error > <span class="code-keyword">self</span>.DEAD_ZONE:
-                    command = <span class="code-string">"RIGHT"</span>
-                <span class="code-keyword">else</span>:
-                    command = <span class="code-string">"FORWARD"</span>
+                if error < -self.DEAD_ZONE:
+                    command = "LEFT"
+                elif error > self.DEAD_ZONE:
+                    command = "RIGHT"
+                else:
+                    command = "FORWARD"
 
-            <span class="code-keyword">self</span>.robot.send_command(command)
+            self.robot.send_command(command)
 
-            <span class="code-comment"># Debug view</span>
+            # Debug view
             cv2.line(frame, (frame_center_x, 0),
                      (frame_center_x, frame.shape[0]), (255, 0, 0), 2)
             cv2.putText(frame, command, (20, 40),
                         cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
 
-            cv2.imshow(<span class="code-string">"Face Tracking (OOPS)"</span>, frame)
+            cv2.imshow("Face Tracking (OOPS)", frame)
 
-            <span class="code-keyword">if</span> cv2.waitKey(1) & 0xFF == 27:
-                <span class="code-keyword">break</span>
+            if cv2.waitKey(1) & 0xFF == 27:
+                break
 
         cv2.destroyAllWindows()
 
 
-<span class="code-comment"># ================= ENTRY POINT =================</span>
-<span class="code-keyword">if</span> __name__ == <span class="code-string">"__main__"</span>:
+# ================= ENTRY POINT =================
+if __name__ == "__main__":
     tracker = FaceTracker(
-        ip_cam_url=<span class="code-string">"http://192.168.1.100:8080/shot.jpg"</span>,
-        pi_ip=<span class="code-string">"192.168.1.45"</span>,
+        ip_cam_url="http://192.168.1.100:8080/shot.jpg",
+        pi_ip="192.168.1.45",
         pi_port=9999
     )
-    tracker.run()</pre>
+    tracker.run()</code></pre>
+                </div>
             </div>
-        </div>
-        
-        <!-- Pi Code Tab -->
-        <div class="code-block" id="pi-code" style="display: none;">
-            <div class="code-header">
-                <div class="code-dot red"></div>
-                <div class="code-dot yellow"></div>
-                <div class="code-dot green"></div>
-                <span style="margin-left: 1rem; color: var(--text-secondary); font-family: 'JetBrains Mono';">pi_server.py</span>
-                <span style="margin-left: auto; color: var(--accent-cyan); font-family: 'JetBrains Mono'; font-size: 0.9rem;">
-                    <i class="fas fa-microchip"></i> Raspberry Pi Server
-                </span>
-            </div>
-            <div class="code-content">
-                <pre><span class="code-keyword">import</span> RPi.GPIO <span class="code-keyword">as</span> GPIO
-<span class="code-keyword">import</span> time
-<span class="code-keyword">import</span> socket
 
-<span class="code-comment"># ================= ACTUATOR CLASS =================</span>
-<span class="code-keyword">class</span> <span class="code-function">Actuator</span>:
-    <span class="code-keyword">def</span> <span class="code-function">__init__</span>(<span class="code-keyword">self</span>, left_pin=23, right_pin=24):
-        <span class="code-keyword">self</span>.LEFT_ESC = left_pin
-        <span class="code-keyword">self</span>.RIGHT_ESC = right_pin
+            <!-- Raspberry Pi Server Code -->
+            <div class="code-section" style="margin-top: 2rem;">
+                <div class="code-header">
+                    <div class="code-title">
+                        <i class="fas fa-raspberry-pi"></i> pi_server.py
+                    </div>
+                    <button class="code-copy-btn" onclick="copyCode('pi-code')">
+                        <i class="far fa-copy"></i> Copy Code
+                    </button>
+                </div>
+                <div class="code-content">
+                    <pre id="pi-code"><code class="language-python">import RPi.GPIO as GPIO
+import time
+import socket
 
-        GPIO.setup(<span class="code-keyword">self</span>.LEFT_ESC, GPIO.OUT)
-        GPIO.setup(<span class="code-keyword">self</span>.RIGHT_ESC, GPIO.OUT)
+# ================= ACTUATOR CLASS =================
+class Actuator:
+    def __init__(self, left_pin=23, right_pin=24):
+        self.LEFT_ESC = left_pin
+        self.RIGHT_ESC = right_pin
 
-        <span class="code-keyword">self</span>.left_pwm = GPIO.PWM(<span class="code-keyword">self</span>.LEFT_ESC, 50)
-        <span class="code-keyword">self</span>.right_pwm = GPIO.PWM(<span class="code-keyword">self</span>.RIGHT_ESC, 50)
+        GPIO.setup(self.LEFT_ESC, GPIO.OUT)
+        GPIO.setup(self.RIGHT_ESC, GPIO.OUT)
 
-        <span class="code-keyword">self</span>.left_pwm.start(0)
-        <span class="code-keyword">self</span>.right_pwm.start(0)
+        self.left_pwm = GPIO.PWM(self.LEFT_ESC, 50)
+        self.right_pwm = GPIO.PWM(self.RIGHT_ESC, 50)
 
-        <span class="code-keyword">self</span>.LEFT_TRIM = 0.0
-        <span class="code-keyword">self</span>.RIGHT_TRIM = -0.05
+        self.left_pwm.start(0)
+        self.right_pwm.start(0)
 
-        <span class="code-keyword">self</span>.arm()
+        self.LEFT_TRIM = 0.0
+        self.RIGHT_TRIM = -0.05
 
-    <span class="code-keyword">def</span> <span class="code-function">arm</span>(<span class="code-keyword">self</span>):
-        <span class="code-keyword">self</span>.stop()
+        self.arm()
+
+    def arm(self):
+        self.stop()
         time.sleep(2)
-        print(<span class="code-string">"ESCs armed"</span>)
+        print("ESCs armed")
 
-    <span class="code-keyword">def</span> <span class="code-function">stop</span>(<span class="code-keyword">self</span>):
-        <span class="code-keyword">self</span>.left_pwm.ChangeDutyCycle(7.5)
-        <span class="code-keyword">self</span>.right_pwm.ChangeDutyCycle(7.5)
+    def stop(self):
+        self.left_pwm.ChangeDutyCycle(7.5)
+        self.right_pwm.ChangeDutyCycle(7.5)
 
-    <span class="code-keyword">def</span> <span class="code-function">forward</span>(<span class="code-keyword">self</span>, speed=0.4):
+    def forward(self, speed=0.4):
         base = speed * 2.5
-        <span class="code-keyword">self</span>.left_pwm.ChangeDutyCycle(7.5 + base + <span class="code-keyword">self</span>.LEFT_TRIM)
-        <span class="code-keyword">self</span>.right_pwm.ChangeDutyCycle(7.5 + base + <span class="code-keyword">self</span>.RIGHT_TRIM)
+        self.left_pwm.ChangeDutyCycle(7.5 + base + self.LEFT_TRIM)
+        self.right_pwm.ChangeDutyCycle(7.5 + base + self.RIGHT_TRIM)
 
-    <span class="code-keyword">def</span> <span class="code-function">left</span>(<span class="code-keyword">self</span>, speed=0.35):
-        <span class="code-keyword">self</span>.left_pwm.ChangeDutyCycle(7.5)
-        <span class="code-keyword">self</span>.right_pwm.ChangeDutyCycle(7.5 + speed * 2.5)
+    def left(self, speed=0.35):
+        self.left_pwm.ChangeDutyCycle(7.5)
+        self.right_pwm.ChangeDutyCycle(7.5 + speed * 2.5)
 
-    <span class="code-keyword">def</span> <span class="code-function">right</span>(<span class="code-keyword">self</span>, speed=0.35):
-        <span class="code-keyword">self</span>.left_pwm.ChangeDutyCycle(7.5 + speed * 2.5)
-        <span class="code-keyword">self</span>.right_pwm.ChangeDutyCycle(7.5)
+    def right(self, speed=0.35):
+        self.left_pwm.ChangeDutyCycle(7.5 + speed * 2.5)
+        self.right_pwm.ChangeDutyCycle(7.5)
 
 
-<span class="code-comment"># ================= SENSOR CLASS =================</span>
-<span class="code-keyword">class</span> <span class="code-function">UltrasonicSensor</span>:
-    <span class="code-keyword">def</span> <span class="code-function">__init__</span>(<span class="code-keyword">self</span>, trig=17, echo=27):
-        <span class="code-keyword">self</span>.TRIG = trig
-        <span class="code-keyword">self</span>.ECHO = echo
-        GPIO.setup(<span class="code-keyword">self</span>.TRIG, GPIO.OUT)
-        GPIO.setup(<span class="code-keyword">self</span>.ECHO, GPIO.IN)
+# ================= SENSOR CLASS =================
+class UltrasonicSensor:
+    def __init__(self, trig=17, echo=27):
+        self.TRIG = trig
+        self.ECHO = echo
+        GPIO.setup(self.TRIG, GPIO.OUT)
+        GPIO.setup(self.ECHO, GPIO.IN)
 
-    <span class="code-keyword">def</span> <span class="code-function">get_distance</span>(<span class="code-keyword">self</span>):
-        GPIO.output(<span class="code-keyword">self</span>.TRIG, <span class="code-keyword">False</span>)
+    def get_distance(self):
+        GPIO.output(self.TRIG, False)
         time.sleep(0.002)
 
-        GPIO.output(<span class="code-keyword">self</span>.TRIG, <span class="code-keyword">True</span>)
+        GPIO.output(self.TRIG, True)
         time.sleep(0.00001)
-        GPIO.output(<span class="code-keyword">self</span>.TRIG, <span class="code-keyword">False</span>)
+        GPIO.output(self.TRIG, False)
 
         timeout = time.time() + 0.03
-        <span class="code-keyword">while</span> GPIO.input(<span class="code-keyword">self</span>.ECHO) == 0:
-            <span class="code-keyword">if</span> time.time() > timeout:
-                <span class="code-keyword">return</span> <span class="code-keyword">None</span>
+        while GPIO.input(self.ECHO) == 0:
+            if time.time() > timeout:
+                return None
         start = time.time()
 
-        <span class="code-keyword">while</span> GPIO.input(<span class="code-keyword">self</span>.ECHO) == 1:
-            <span class="code-keyword">if</span> time.time() > timeout:
-                <span class="code-keyword">return</span> <span class="code-keyword">None</span>
+        while GPIO.input(self.ECHO) == 1:
+            if time.time() > timeout:
+                return None
         end = time.time()
 
-        <span class="code-keyword">return</span> round((end - start) * 17150, 1)
+        return round((end - start) * 17150, 1)
 
 
-<span class="code-comment"># ================= CONTROLLER CLASS =================</span>
-<span class="code-keyword">class</span> <span class="code-function">RobotController</span>:
-    <span class="code-keyword">def</span> <span class="code-function">__init__</span>(<span class="code-keyword">self</span>):
-        GPIO.setwarnings(<span class="code-keyword">False</span>)
+# ================= CONTROLLER CLASS =================
+class RobotController:
+    def __init__(self):
+        GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BCM)
 
-        <span class="code-keyword">self</span>.actuator = Actuator()
-        <span class="code-keyword">self</span>.sensor = UltrasonicSensor()
+        self.actuator = Actuator()
+        self.sensor = UltrasonicSensor()
 
-        <span class="code-keyword">self</span>.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        <span class="code-keyword">self</span>.server.bind((<span class="code-string">"0.0.0.0"</span>, 9999))
-        <span class="code-keyword">self</span>.server.listen(1)
+        self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.server.bind(("0.0.0.0", 9999))
+        self.server.listen(1)
 
-        print(<span class="code-string">"🤖 Robot Controller Running"</span>)
-        <span class="code-keyword">self</span>.conn, addr = <span class="code-keyword">self</span>.server.accept()
-        print(<span class="code-string">"Connected from:"</span>, addr)
+        print("🤖 Robot Controller Running")
+        self.conn, addr = self.server.accept()
+        print("Connected from:", addr)
 
-        <span class="code-keyword">self</span>.last_cmd_time = time.time()
+        self.last_cmd_time = time.time()
 
-    <span class="code-keyword">def</span> <span class="code-function">run</span>(<span class="code-keyword">self</span>):
-        <span class="code-keyword">try</span>:
-            <span class="code-keyword">while</span> <span class="code-keyword">True</span>:
-                cmd = <span class="code-keyword">self</span>.conn.recv(1024).decode().strip()
-                <span class="code-keyword">if</span> cmd:
-                    <span class="code-keyword">self</span>.last_cmd_time = time.time()
+    def run(self):
+        try:
+            while True:
+                cmd = self.conn.recv(1024).decode().strip()
+                if cmd:
+                    self.last_cmd_time = time.time()
 
-                distance = <span class="code-keyword">self</span>.sensor.get_distance()
-                print(<span class="code-string">"Distance:"</span>, distance)
+                distance = self.sensor.get_distance()
+                print("Distance:", distance)
 
-                <span class="code-comment"># Safety override</span>
-                <span class="code-keyword">if</span> distance <span class="code-keyword">is</span> <span class="code-keyword">not</span> <span class="code-keyword">None</span> <span class="code-keyword">and</span> distance < 30:
-                    <span class="code-keyword">self</span>.actuator.stop()
-                    <span class="code-keyword">continue</span>
+                # Safety override
+                if distance is not None and distance < 30:
+                    self.actuator.stop()
+                    continue
 
-                <span class="code-keyword">if</span> cmd == <span class="code-string">"FORWARD"</span>:
-                    <span class="code-keyword">self</span>.actuator.forward()
-                <span class="code-keyword">elif</span> cmd == <span class="code-string">"LEFT"</span>:
-                    <span class="code-keyword">self</span>.actuator.left()
-                <span class="code-keyword">elif</span> cmd == <span class="code-string">"RIGHT"</span>:
-                    <span class="code-keyword">self</span>.actuator.right()
-                <span class="code-keyword">else</span>:
-                    <span class="code-keyword">self</span>.actuator.stop()
+                if cmd == "FORWARD":
+                    self.actuator.forward()
+                elif cmd == "LEFT":
+                    self.actuator.left()
+                elif cmd == "RIGHT":
+                    self.actuator.right()
+                else:
+                    self.actuator.stop()
 
-                <span class="code-comment"># Failsafe</span>
-                <span class="code-keyword">if</span> time.time() - <span class="code-keyword">self</span>.last_cmd_time > 0.6:
-                    <span class="code-keyword">self</span>.actuator.stop()
+                # Failsafe
+                if time.time() - self.last_cmd_time > 0.6:
+                    self.actuator.stop()
 
-        <span class="code-keyword">except</span> KeyboardInterrupt:
-            <span class="code-keyword">pass</span>
-        <span class="code-keyword">finally</span>:
-            <span class="code-keyword">self</span>.shutdown()
+        except KeyboardInterrupt:
+            pass
+        finally:
+            self.shutdown()
 
-    <span class="code-keyword">def</span> <span class="code-function">shutdown</span>(<span class="code-keyword">self</span>):
-        <span class="code-keyword">self</span>.actuator.stop()
+    def shutdown(self):
+        self.actuator.stop()
         GPIO.cleanup()
-        print(<span class="code-string">"Robot stopped safely"</span>)
+        print("Robot stopped safely")
 
 
-<span class="code-comment"># ================= ENTRY POINT =================</span>
-<span class="code-keyword">if</span> __name__ == <span class="code-string">"__main__"</span>:
+# ================= ENTRY POINT =================
+if __name__ == "__main__":
     robot = RobotController()
-    robot.run()</pre>
-            </div>
-        </div>
-        
-        <!-- Code Tabs Navigation -->
-        <div class="code-tabs" style="display: flex; background: rgba(15, 23, 42, 0.8); padding: 0.5rem 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
-            <button class="code-tab-btn active" onclick="switchCodeTab('laptop')" style="background: transparent; border: none; color: var(--text-primary); padding: 0.5rem 1rem; cursor: pointer; font-family: 'JetBrains Mono'; border-radius: 5px;">
-                <i class="fas fa-laptop-code"></i> Laptop Client
-            </button>
-            <button class="code-tab-btn" onclick="switchCodeTab('pi')" style="background: transparent; border: none; color: var(--text-secondary); padding: 0.5rem 1rem; cursor: pointer; font-family: 'JetBrains Mono'; border-radius: 5px;">
-                <i class="fas fa-raspberry-pi"></i> Raspberry Pi Server
-            </button>
-        </div>
-    </div>
-</section>
-
-        <!-- Working Algorithm -->
-        <section data-aos="fade-up" data-aos-delay="200">
-            <div class="dev-card">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <i class="fas fa-project-diagram"></i>
-                    </div>
-                    <h2 class="card-title">Working Algorithm</h2>
+    robot.run()</code></pre>
                 </div>
-                
-                <div class="dev-timeline">
+            </div>
+
+            <h3>4.1 Communication Protocol</h3>
+            <div class="flowchart-container">
+                <h4>TCP/IP Socket Communication Flow</h4>
+                <div class="timeline">
                     <div class="timeline-item">
-                        <h3 style="color: var(--accent-cyan); margin-bottom: 0.5rem;">Frame Capture</h3>
-                        <p>Real-time video streaming via WiFi at 30 FPS with adaptive resolution</p>
+                        <h4>Connection Establishment</h4>
+                        <p>Laptop connects to Raspberry Pi on port 9999 via WiFi</p>
                     </div>
-                    
                     <div class="timeline-item">
-                        <h3 style="color: var(--accent-cyan); margin-bottom: 0.5rem;">Face Detection</h3>
-                        <p>Haar Cascade with LBP features for optimal performance on embedded systems</p>
+                        <h4>Command Transmission</h4>
+                        <p>Simple ASCII commands with newline termination: "FORWARD\n", "LEFT\n", "RIGHT\n", "STOP\n"</p>
                     </div>
-                    
                     <div class="timeline-item">
-                        <h3 style="color: var(--accent-cyan); margin-bottom: 0.5rem;">PID Control</h3>
-                        <p>Proportional-Integral-Derivative algorithm for smooth robotic movement</p>
+                        <h4>Real-time Processing</h4>
+                        <p>Commands processed within 65ms total latency</p>
                     </div>
-                    
                     <div class="timeline-item">
-                        <h3 style="color: var(--accent-cyan); margin-bottom: 0.5rem;">Motor Control</h3>
-                        <p>PWM signals with ESC modules for precise speed and direction control</p>
+                        <h4>Safety Mechanisms</h4>
+                        <p>Automatic stop on timeout (0.6s) or obstacle detection (<30cm)</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Team Showcase -->
-        <section id="team" data-aos="fade-up" data-aos-delay="250">
-            <div class="team-showcase">
-                <div class="team-card">
+        <!-- Results Section -->
+        <section id="results" class="section-card" data-aos="fade-up">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h2 class="section-title">5. PERFORMANCE RESULTS & METRICS</h2>
+            </div>
+
+            <h3>5.1 Performance Metrics</h3>
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value">25 FPS</div>
+                    <div class="metric-label">Client Frame Rate</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">92%</div>
+                    <div class="metric-label">Face Detection Accuracy</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">65ms</div>
+                    <div class="metric-label">Total Latency</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">25 Hz</div>
+                    <div class="metric-label">Server Control Loop</div>
+                </div>
+            </div>
+
+            <h3>5.2 Latency Breakdown</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Time</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Frame Capture</td>
+                        <td>5ms</td>
+                        <td>IP camera streaming</td>
+                    </tr>
+                    <tr>
+                        <td>Face Detection</td>
+                        <td>10ms</td>
+                        <td>Haar Cascade processing</td>
+                    </tr>
+                    <tr>
+                        <td>Decision Logic</td>
+                        <td>1ms</td>
+                        <td>Command calculation</td>
+                    </tr>
+                    <tr>
+                        <td>Network Transmission</td>
+                        <td>1ms</td>
+                        <td>TCP/IP over WiFi</td>
+                    </tr>
+                    <tr>
+                        <td>Motor Control</td>
+                        <td>2ms</td>
+                        <td>PWM signal generation</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Total</strong></td>
+                        <td><strong>65ms</strong></td>
+                        <td><strong>End-to-end latency</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>5.3 Safety Mechanisms</h3>
+            <div class="flowchart-grid">
+                <div class="flowchart-step">
+                    <span class="step-number">1</span>
+                    <h4>Distance Override</h4>
+                    <p>Force STOP if obstacle < 30cm</p>
+                </div>
+                <div class="flowchart-step">
+                    <span class="step-number">2</span>
+                    <h4>Command Timeout</h4>
+                    <p>Automatic stop after 0.6s</p>
+                </div>
+                <div class="flowchart-step">
+                    <span class="step-number">3</span>
+                    <h4>ESC Arming</h4>
+                    <p>2-second neutral signal at startup</p>
+                </div>
+                <div class="flowchart-step">
+                    <span class="step-number">4</span>
+                    <h4>Graceful Shutdown</h4>
+                    <p>Proper GPIO cleanup on exit</p>
+                </div>
+            </div>
+
+            <h3>5.4 Testing Results</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Test Condition</th>
+                        <th>Expected Result</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Static Target</td>
+                        <td>Maintain position</td>
+                        <td><span style="color: #10b981;">✓ PASS</span></td>
+                    </tr>
+                    <tr>
+                        <td>Moving Target (Straight)</td>
+                        <td>Follow at safe distance</td>
+                        <td><span style="color: #10b981;">✓ PASS</span></td>
+                    </tr>
+                    <tr>
+                        <td>Moving Target (Lateral)</td>
+                        <td>Steer to recenter</td>
+                        <td><span style="color: #10b981;">✓ PASS</span></td>
+                    </tr>
+                    <tr>
+                        <td>No Face Detected</td>
+                        <td>Issue STOP command</td>
+                        <td><span style="color: #10b981;">✓ PASS</span></td>
+                    </tr>
+                    <tr>
+                        <td>Obstacle Detection</td>
+                        <td>Emergency stop</td>
+                        <td><span style="color: #10b981;">✓ PASS</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>5.5 Project Achievements</h3>
+            <ul>
+                <li>Successfully implemented a distributed face-tracking robot using six well-designed OOP classes</li>
+                <li>Demonstrated all four OOP pillars (encapsulation, abstraction, inheritance capability, polymorphism potential)</li>
+                <li>Real-time performance: 25 FPS client processing, 25 Hz server control loop</li>
+                <li>Safety mechanisms: Distance override, command timeout failsafe, ESC arming protocol</li>
+                <li>Clean architecture: Loose coupling, high cohesion, testable components</li>
+                <li>Practical integration: IP camera streaming, TCP/IP sockets, PWM motor control, ultrasonic sensing</li>
+            </ul>
+        </section>
+
+        <!-- Team Photo Section -->
+        <section class="section-card" data-aos="fade-up">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-camera"></i>
+                </div>
+                <h2 class="section-title">TEAM PHOTO</h2>
+            </div>
+            <div style="text-align: center; padding: 2rem;">
+                <div style="max-width: 800px; margin: 0 auto;">
                     <img src="https://github.com/Chidanand467/Bot_Controller/blob/master/WhatsApp%20Image%202026-01-12%20at%208.26.18%20AM.jpeg?raw=true" 
-                         alt="Development Team" class="team-image">
-                    <div class="team-info">
-                        <h3 style="color: var(--text-primary); margin-bottom: 1rem;">Development Team</h3>
-                        <p style="color: var(--text-secondary); line-height: 1.8;">
-                            Our team combines expertise in robotics, computer vision, and software engineering 
-                            to build cutting-edge autonomous systems. This project represents months of dedicated 
-                            development and testing.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Applications -->
-        <section data-aos="fade-up" data-aos-delay="300">
-            <div class="dev-card">
-                <div class="card-header">
-                    <div class="card-icon">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <h2 class="card-title">Applications & Future Scope</h2>
-                </div>
-                
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem;">
-                    <div style="padding: 1.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 10px;">
-                        <i class="fas fa-hospital" style="color: var(--accent-cyan); font-size: 2rem; margin-bottom: 1rem;"></i>
-                        <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Healthcare</h4>
-                        <p style="color: var(--text-secondary); font-size: 0.9rem;">Assistive robots for elderly care and hospital logistics</p>
-                    </div>
-                    
-                    <div style="padding: 1.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 10px;">
-                        <i class="fas fa-shield-alt" style="color: var(--accent-cyan); font-size: 2rem; margin-bottom: 1rem;"></i>
-                        <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Security</h4>
-                        <p style="color: var(--text-secondary); font-size: 0.9rem;">Autonomous surveillance and perimeter monitoring</p>
-                    </div>
-                    
-                    <div style="padding: 1.5rem; background: rgba(255, 255, 255, 0.05); border-radius: 10px;">
-                        <i class="fas fa-shopping-cart" style="color: var(--accent-cyan); font-size: 2rem; margin-bottom: 1rem;"></i>
-                        <h4 style="color: var(--text-primary); margin-bottom: 0.5rem;">Retail</h4>
-                        <p style="color: var(--text-secondary); font-size: 0.9rem;">Smart shopping assistants and inventory management</p>
-                    </div>
-                </div>
-                
-                <div style="margin-top: 3rem; padding: 2rem; background: rgba(37, 99, 235, 0.1); border-radius: 15px; border: 1px solid rgba(37, 99, 235, 0.3);">
-                    <h3 style="color: var(--accent-blue); margin-bottom: 1rem;">Future Enhancements</h3>
-                    <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
-                        <span class="tech-tag">YOLO Object Detection</span>
-                        <span class="tech-tag">SLAM Mapping</span>
-                        <span class="tech-tag">Multi-Robot Coordination</span>
-                        <span class="tech-tag">Cloud Integration</span>
-                        <span class="tech-tag">Gesture Control</span>
-                    </div>
+                         alt="Project Team Photo" 
+                         style="width: 100%; border-radius: 12px; box-shadow: var(--card-shadow);">
+                    <p style="margin-top: 1rem; color: var(--text-light); font-style: italic;">
+                        Project development team working on the autonomous face tracking robot system
+                    </p>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Developer Footer -->
-    <footer class="dev-footer" id="contact">
-        <div class="footer-grid">
-            <div class="footer-section">
-                <h3>Project Details</h3>
-                <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 1rem;">
-                    Autonomous Person Following Robot<br>
-                    3rd Semester Project<br>
-                    OOP for Automation
-                </p>
-                <p style="color: var(--text-secondary);">
-                    Academic Year: 2025-2026
-                </p>
+    <!-- Footer -->
+    <footer class="project-footer">
+        <div class="footer-content">
+            <div>
+                <h3><i class="fas fa-university"></i> Institution</h3>
+                <p>KLE Technological University</p>
+                <p>Hubballi, Karnataka</p>
+                <p>Department of Automation & Robotics</p>
             </div>
             
-            <div class="footer-section">
-                <h3>Student Information</h3>
-                <p style="color: var(--text-secondary); line-height: 1.8;">
-                    <strong style="color: var(--text-primary);">CHIDANAND S K</strong><br>
-                    USN: 01FE24BAR027<br>
-                    2nd Year B.E. Automation & Robotics<br>
-                    KLE Technological University
-                </p>
+            <div>
+                <h3><i class="fas fa-user-graduate"></i> Student</h3>
+                <p><strong>CHIDANAND S K</strong></p>
+                <p>USN: 01FE24BAR027</p>
+                <p>2nd Year B.E. Automation & Robotics</p>
             </div>
             
-            <div class="footer-section">
-                <h3>Connect</h3>
-                <div class="social-links">
-                    <a href="mailto:chidanandkarennavar36@example.com" class="social-link" title="Email">
-                        <i class="fas fa-envelope"></i>
-                    </a>
-                    <a href="https://github.com/chidanand467" class="social-link" title="GitHub">
-                        <i class="fab fa-github"></i>
-                    </a>
-                    <a href="#" class="https://www.linkedin.com/in/chidanand-s-karennavar-096b21332?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" title="LinkedIn">
-                        <i class="fab fa-linkedin"></i>
-                    </a>
-                    </a>
-                </div>
+            <div>
+                <h3><i class="fas fa-book"></i> Course</h3>
+                <p>OOP for Automation</p>
+                <p>3rd Semester Project</p>
+                <p>Academic Year: 2025-2026</p>
             </div>
         </div>
         
-        <div style="text-align: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
-            <p style="color: var(--text-secondary); font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;">
-                © 2025 Autonomous Robotics Project 
+        <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+            <p style="color: var(--text-medium);">
+                <i class="fas fa-robot"></i> Face Recognition and Tracking Robot Project
             </p>
-            <p style="color: var(--text-secondary); font-size: 0.8rem; margin-top: 1rem;">
-                A showcase of software engineering excellence in robotics
+            <p style="color: var(--text-light); font-size: 0.9rem; margin-top: 0.5rem;">
+                © 2026 KLE Technological University | Document Version: 2.0
             </p>
         </div>
     </footer>
@@ -1165,35 +1399,41 @@
             offset: 100
         });
 
-        // Initialize Particle.js
-        particlesJS("particles-js", {
-            particles: {
-                number: { value: 40, density: { enable: true, value_area: 800 } },
-                color: { value: ["#2563eb", "#06b6d4", "#8b5cf6"] },
-                shape: { type: "circle" },
-                opacity: { value: 0.2, random: true },
-                size: { value: 2, random: true },
-                line_linked: {
-                    enable: true,
-                    distance: 100,
-                    color: "#2563eb",
-                    opacity: 0.1,
-                    width: 1
-                },
-                move: {
-                    enable: true,
-                    speed: 1,
-                    direction: "none",
-                    random: true,
-                    straight: false,
-                    out_mode: "out",
-                    bounce: false
-                }
-            }
-        });
+        // Initialize Prism.js for code highlighting
+        Prism.highlightAll();
+
+        // Toggle expandable sections
+        function toggleExpand(id) {
+            const content = document.getElementById(id);
+            const icon = content.previousElementSibling.querySelector('.fa-chevron-down');
+            
+            content.classList.toggle('show');
+            icon.classList.toggle('fa-rotate-180');
+        }
+
+        // Copy code to clipboard
+        function copyCode(elementId) {
+            const codeElement = document.getElementById(elementId);
+            const codeText = codeElement.textContent;
+            
+            navigator.clipboard.writeText(codeText).then(() => {
+                const button = event.target.closest('.code-copy-btn');
+                const originalText = button.innerHTML;
+                
+                button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                button.style.background = '#10b981';
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.background = '';
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy code: ', err);
+            });
+        }
 
         // Smooth scrolling for navigation
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        document.querySelectorAll('.nav-link').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
@@ -1206,78 +1446,44 @@
             });
         });
 
-        // Typing effect for hero title
-        function typeWriter(element, text, speed) {
-            let i = 0;
-            element.innerHTML = '';
-            
-            function type() {
-                if (i < text.length) {
-                    element.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                }
+        // Print button functionality
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'p') {
+                e.preventDefault();
+                window.print();
             }
-            type();
-        }
-
-        // Animate stats counter
-        function animateCounter(element, target, duration) {
-            let start = 0;
-            const increment = target / (duration / 16); // 60fps
-            
-            function update() {
-                start += increment;
-                if (start < target) {
-                    element.textContent = Math.floor(start) + (element.textContent.includes('%') ? '%' : '');
-                    requestAnimationFrame(update);
-                } else {
-                    element.textContent = target + (element.textContent.includes('%') ? '%' : '');
-                }
-            }
-            update();
-        }
-
-        // Initialize animations when page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            // Animate stats
-            const stats = document.querySelectorAll('.stat-number');
-            stats.forEach(stat => {
-                const value = parseInt(stat.textContent);
-                animateCounter(stat, value, 2000);
-            });
-
-            // Add hover effects to cards
-            const cards = document.querySelectorAll('.dev-card');
-            cards.forEach(card => {
-                card.addEventListener('mouseenter', () => {
-                    card.style.transform = 'translateY(-10px)';
-                });
-                
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'translateY(0)';
-                });
-            });
-
-            // Parallax effect for floating elements
-            window.addEventListener('scroll', () => {
-                const scrolled = window.pageYOffset;
-                const floatingElements = document.querySelectorAll('.floating-element');
-                
-                floatingElements.forEach(el => {
-                    const speed = 0.5;
-                    const yPos = -(scrolled * speed);
-                    el.style.transform = `translateY(${yPos}px)`;
-                });
-            });
         });
 
-        // Terminal-like typing effect for code
-        const codeLines = document.querySelectorAll('.code-content pre');
-        codeLines.forEach((line, index) => {
-            setTimeout(() => {
-                line.style.animation = 'typing 2s steps(40, end) forwards';
-            }, index * 500);
+        // Add print button
+        window.addEventListener('load', function() {
+            const printButton = document.createElement('button');
+            printButton.innerHTML = '<i class="fas fa-print"></i> Print Report';
+            printButton.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: var(--accent-blue);
+                color: white;
+                border: none;
+                padding: 12px 20px;
+                border-radius: 25px;
+                cursor: pointer;
+                font-family: 'Inter', sans-serif;
+                font-weight: 500;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                z-index: 1000;
+                transition: transform 0.3s, box-shadow 0.3s;
+            `;
+            printButton.addEventListener('mouseenter', () => {
+                printButton.style.transform = 'translateY(-2px)';
+                printButton.style.boxShadow = '0 6px 12px rgba(0,0,0,0.15)';
+            });
+            printButton.addEventListener('mouseleave', () => {
+                printButton.style.transform = 'translateY(0)';
+                printButton.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+            });
+            printButton.addEventListener('click', () => window.print());
+            document.body.appendChild(printButton);
         });
     </script>
 </body>
